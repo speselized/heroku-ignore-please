@@ -128,14 +128,12 @@ class Music:
             player.volume = 0.6
             entry = VoiceEntry(ctx.message, player)
             await self.client.say('Enqueued ' + str(entry))
-            await self.client.add_reaction(message, "⏯")
             await state.songs.put(entry)
 
     @commands.command(pass_context=True, no_pm=True)
     async def pause(self, ctx):
         """Pauses the currently played song."""
-        message = await self.client.say('Song has been paused!')
-        await self.client.add_reaction(message, "⏸️")
+        await self.client.say('Song has been paused!')
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
             player = state.player
@@ -144,8 +142,7 @@ class Music:
     @commands.command(pass_context=True, no_pm=True)
     async def resume(self, ctx):
         """Resumes the currently played song."""
-        message = await self.client.say('Song has been resumed!')
-        await self.client.add_reaction(message, "⏯")
+        await self.client.say('Song has been resumed!')
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
             player = state.player
@@ -167,8 +164,6 @@ class Music:
             state.audio_player.cancel()
             del self.voice_states[server.id]
             await state.voice.disconnect()
-            message = await self.client.say('Bot has stopped and left voice channel :thumbsup')
-            await self.client.add_reaction(message, "⏹")
         except:
             pass
 
@@ -188,8 +183,6 @@ class Music:
             state.audio_player.cancel()
             del self.voice_states[server.id]
             await state.voice.disconnect()
-            message = await self.client.say('Bot has left the voice channel!')
-            await self.client.add_reaction(message, "👋")
         except:
             pass
 
@@ -209,8 +202,6 @@ class Music:
             state.audio_player.cancel()
             del self.voice_states[server.id]
             await state.voice.disconnect()
-            message = await self.client.say('Bot has left the voice channel!')
-            await self.client.add_reaction(message, "👋")
         except:
             pass
 
@@ -222,14 +213,12 @@ class Music:
 
         state = self.get_voice_state(ctx.message.server)
         if not state.is_playing():
-            message = await self.client.say('Not playing any music right now...')
-            await self.client.add_reaction(message, "❌")
+            await self.client.say('Not playing any music right now...')
             return
 
         voter = ctx.message.author
         if voter == state.current.requester:
-            message = await self.client.say('Requester requested skipping song...')
-            await self.client.add_reaction(message, "✅")
+            await self.client.say('Requester requested skipping song...')
             state.skip()
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
@@ -248,28 +237,23 @@ class Music:
         try:
             await self.create_voice_client(channel)
         except discord.ClientException:
-            message = await self.client.say('Already in a voice channel...')
-            await self.client.add_reaction(message, "❌")
+            await self.client.say('Already in a voice channel...')
         except discord.InvalidArgument:
-            message = await self.client.say('This is not a voice channel...')
-            await self.client.add_reaction(message, "❌")
+            await self.client.say('This is not a voice channel...')
         else:
-            message = await self.client.say('Ready to play audio in ' + channel.name)
-            await self.client.add_reaction(message, "✅")
+            await self.client.say('Ready to play audio in ' + channel.name)
 
     @commands.command(pass_context=True, no_pm=True)
     async def join(self, ctx):
         """The bot joins the voice channel you're in."""
         summoned_channel = ctx.message.author.voice_channel
         if summoned_channel is None:
-            message = await self.client.say('You are not in a voice channel.')
-            await self.client.add_reaction(message, "❌")
+            await self.client.say('You are not in a voice channel.')
             return False
 
         state = self.get_voice_state(ctx.message.server)
         if state.voice is None:
             state.voice = await self.client.join_voice_channel(summoned_channel)
-            await self.client.add_reaction(message, "✅")
         else:
             await state.voice.move_to(summoned_channel)
 
