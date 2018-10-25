@@ -34,25 +34,12 @@ class Fun:
             await self.client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
 
 
-    @commands.command(name='8ball', aliases=['ball', 'eightball', '8-ball'], pass_context=True)
-    async def eight_ball(self, ctx, context):
-        possible_responses = [
-            "**Definitely**",
-            "**Without doubt**",
-            "**NO**",
-            "**I'm sorry :(**",
-            "**Of course**",
-            "**Possibly**",
-            "**Maybe",
-            "**I'm pretty certain**",
-            "**I wish :(**",
-            "**No**",
-            "**Impossible**",
-            "**Yes.**",
-        ]
-        message = await self.client.say(random.choice(possible_responses) + " " + context.message.author.mention)
-        await self.client.add_reaction(message, "🎱")
-        await self.client.say(message)
+        
+        
+    @commands.command(name="8ball")
+    async def _ball(self, ctx):
+        await self.client.say(random.choice(["It is certain"," It is decidedly so","Without a doubt","Yes, definitely","You may rely on it","As I see it, yes"," Most likely","Outlook good","Yes","Signs point to yes"," Reply hazy try again","Ask again later","Better not tell you now","Cannot predict now","Concentrate and ask again","Don't count on it","My reply is no","My sources say no","Outlook not so good","Very doubtful"]))
+        await self.client.add_reaction("🎱")
 
 
 
