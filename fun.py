@@ -34,7 +34,24 @@ class Fun:
             await self.client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
 
 
-
+    @commands.command(name='8ball', aliases=['ball', 'eightball', '8-ball'], pass_context=True)
+    async def eight_ball(self, ctx, context):
+        possible_responses = [
+            "**Definitely**",
+            "**Without doubt**",
+            "**NO**",
+            "**I'm sorry :(**",
+            "**Of course**",
+            "**Possibly**",
+            "**Maybe",
+            "**I'm pretty certain**",
+            "**I wish :(**",
+            "**No**",
+            "**Impossible**",
+            "**Yes.**",
+        ]
+        message = await self.client.say(random.choice(possible_responses) + " " + context.message.author.mention)
+        await self.client.add_reaction(message, "🎱")
 
 
 
