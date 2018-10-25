@@ -52,6 +52,7 @@ class Fun:
         ]
         message = await self.client.say(random.choice(possible_responses) + " " + context.message.author.mention)
         await self.client.add_reaction(message, "🎱")
+        await self.client.say(message)
 
 
 
