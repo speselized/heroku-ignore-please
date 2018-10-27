@@ -113,11 +113,13 @@ class Music:
             'default_search': 'auto',
             'quiet': True,
         }
-         if state.voice is None:
+
+        if state.voice is None:
             success = await ctx.invoke(self.summon)
             if not success:
                 return
-         try:
+
+        try:
             player = await state.voice.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next)
         except Exception as e:
             fmt = 'An error occurred while processing this request: ```py\n{}: {}\n```'
