@@ -173,7 +173,7 @@ class Moderations:
 
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
-        async def warn(ctx,member:discord.Member, *, reason):
+        async def warn(self, ctx,member:discord.Member, *, reason):
         userid = member
         embed = discord.Embed(colour=discord.Colour(0xdb0a0a), timestamp=datetime.datetime.utcfromtimestamp(1541192421))
         embed.set_author(name="Warn Log", icon_url="https://cdn.discordapp.com/attachments/362056767284445187/508026169971572743/628px-Attention_Sign.svg.png")
