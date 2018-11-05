@@ -129,6 +129,7 @@ async def level_up(users, user, channel):
     
     if lvl_start < lvl_end:
         await client.send_message(channel, '{} has leveled up to level {}'.format(user.mention, lvl_end))
-        users[user.id]['level'] = lvl_end  
+        users[user.id]['level'] = lvl_end
+        await client.process_commands(message)
 
 client.run(TOKEN)
