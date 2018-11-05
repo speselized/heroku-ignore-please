@@ -167,17 +167,12 @@ class Moderations:
 
         
     @commands.command(pass_context=True)
-    @commands.has_role('Staff')
-    async def mute(ctx, user:discord.Member, *args):
-        min = args[0]
-        reason = ' '.join(args[1:])
-        role = get(ctx.message.author.server.roles, name="Muted")
-        await client.add_roles(user, role)
-        await client.delete_message(ctx.message)
-        await client.say(f"{user.mention} has been muted for {min} minutes!", delete_after=5)
-        await client.send_message(user, f"You have been muted in {servername} for {min} minutes. Reason from moderator: {reason}")
-        await asyncio.sleep(min*60)
-        await client.remove_roles(user, role)
+    async def mute(self, ctx, member:discord.Member, *, reason):
+        if "Staff" in [y.name.lower() for y in ctx.message.author.roles]:
+            await self.client.add_roles(member, Muted)
+            await self.client.say("**<@{}>** was muted successfully.".format(member.id))
+            callout_channel = self.client.get_channel('502068770039136257')
+            await self.client.send_message(callout_channel, embed=discord.Embed(title="Mute", description='<@{}> has muted <@{}> for '.format(str(ctx.message.author.id), member.id) + reason, colour=discord.Colour.red()))
 
 
     @commands.command(pass_context = True)
