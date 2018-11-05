@@ -36,20 +36,23 @@ class Animals():
         await self.client.delete_message(ctx.message)
 
 
-    @commands.command()
-    @commands.cooldown(rate=1, per=1.5, type=commands.BucketType.user)
+    @commands.command(pass_context=True)
     async def cat(self, ctx):
-        """ Posts a random cat """
-        await self.client.randomimageapi(ctx, 'https://nekos.life/api/v2/img/meow', 'url')
-        await self.client.delete_message(ctx.message)
-
-
-    @commands.command()
-    @commands.cooldown(rate=1, per=1.5, type=commands.BucketType.user)
-    async def duck(self, ctx):
-        """ Posts a random duck """
-        await self.client.randomimageapi(ctx, 'https://random-d.uk/api/v1/random', 'url')
-        await self.client.delete_message(ctx.message)
+        """Grabs a random cat picture"""
+        for i in range(0,5):
+            # site is buggy and sometimes gives bad images
+            # just loop until we get a good one
+            try:
+                r = requests.get("https://aws.random.cat/meow")
+                r = str(r.content)
+                r = r.replace("b'","")
+                r = r.replace("'","")
+                r = r.replace("\\","")
+                url = json.loads(r)["file"]
+                await self.client.say(url)
+                break
+            except:
+                pass
 
 
 def setup(client):
