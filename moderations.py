@@ -166,7 +166,7 @@ class Moderations:
 
 
         
-    @client.command(pass_context=True)
+    @commands.command(pass_context=True)
     async def mute(self, ctx, user: discord.Member, time=None, *, reason=None):
         if ctx.message.author.server_permissions.mute_members:
             MutedRole = discord.utils.get(ctx.message.server.roles, name='Muted')
