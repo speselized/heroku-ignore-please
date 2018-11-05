@@ -149,11 +149,7 @@ class Moderations:
         await self.client.say(embed=embed)
 
 
-    @commands.command(name='kick',
-                    description="kicks people",
-                    brief="Kicks people.",
-                    aliases=['kick that guy\'s booty','delete'],
-                    pass_context=True)
+    @commands.command(name='kick', description="kicks people", brief="Kicks people.", aliases=['kick that guy\'s booty','delete'], pass_context=True)
     async def kick(self, ctx, user:discord.Member, *, reason:str=None):
         """Kicks someone from the server"""
         if reason is None:
@@ -167,17 +163,6 @@ class Moderations:
                 await self.client.say("Permission denied. Check if you and I have sufficent permission to kick users.")
                 return
 
-
-    @commands.command(pass_context=True)
-    @commands.has_role('Staff')
-        async def warn(self, ctx,member:discord.Member, *, reason):
-        userid = member
-        embed = discord.Embed(colour=discord.Colour(0xdb0a0a), timestamp=datetime.datetime.utcfromtimestamp(1541192421))
-        embed.set_author(name="Warn Log", icon_url="https://cdn.discordapp.com/attachments/362056767284445187/508026169971572743/628px-Attention_Sign.svg.png")
-        embed.add_field(name="User", value=f"<@{userid}>")
-        embed.add_field(name="Moderator", value=f"<@{ctx.message.author.id}>")
-        embed.add_field(name="Reason", value=f"{reason}")
-        await self.client.send_message(client.get_channel(warns), embed=embed)
 
 
         
