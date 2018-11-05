@@ -166,16 +166,30 @@ class Moderations:
 
 
         
-    @commands.command(pass_context=True)
-    @commands.has_role('Staff')
-    async def mute(self, ctx, user: discord.Member, *, min, reason):
-        role = discord.utils.get(user.server.roles, name='Muted')
-        await self.client.add_roles(user, role)
-        await self.client.delete_message(ctx.message)
-        await self.client.say("{} has been muted for {} minutes!".format(user.mention, min))
-        await self.client.send_message(user, "You have been muted in {} for {} minutes. Reason from moderator: {}".format(server.name, min, reason))
-        await asyncio.sleep(min*300)
-        await self.client.remove_roles(user, role)
+    @commands.command(pass_context = True)
+    @commands.has_permissions(ban_members=True)
+    async def mute(self, ctx, user: discord.Member, mutetime=None):
+        '''Forces someone to shut up. Usage: *mute [user] [time in mins]'''
+        try:
+            if mutetime is None:
+                await self.client.edit_channel_permissions(user, send_messages=False)
+                await self.client.say(f"{user.mention} is now forced to shut up. :zipper_mouth: ")
+            else:
+                try:
+                    mutetime =int(mutetime)
+                    mutetime = mutetime * 60
+                except ValueError:
+                    return await self.client.say("Your time is an invalid number. Make sure...it is a number.")
+                await self.client.edit_channel_permissions(user, send_messages=False)
+                await self.client.say(f"{user.mention} is now forced to shut up. :zipper_mouth: ")
+                await asyncio.sleep(mutetime)
+                await self.client.edit_channel_permissions(user, send_messages=True)
+                await self.client.say(f"{user.mention} is now un-shutted up.")
+        except discord.Forbidden:
+            return await self.client.say("I could not mute the user. Make sure I have the manage channels permission.")
+        except discord.ext.commands.MissingPermissions:
+            await self.clieny.say("Aw, come on! You thought you could get away with shutting someone up without permissions.")
+
 
     @commands.command(pass_context = True)
     @commands.has_permissions(kick_members=True)
