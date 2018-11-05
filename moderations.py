@@ -185,10 +185,6 @@ class Moderations:
                 await asyncio.sleep(mutetime)
                 await self.client.edit_channel_permissions(user, send_messages=True)
                 await self.client.say(f"{user.mention} is now un-shutted up.")
-        except discord.Forbidden:
-            return await self.client.say("I could not mute the user. Make sure I have the manage channels permission.")
-        except discord.ext.commands.MissingPermissions:
-            await self.clieny.say("Aw, come on! You thought you could get away with shutting someone up without permissions.")
 
 
     @commands.command(pass_context = True)
