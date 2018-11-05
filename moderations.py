@@ -166,25 +166,18 @@ class Moderations:
 
 
         
-    @commands.command(pass_context = True)
-    @commands.has_permissions(ban_members=True)
-    async def mute(self, ctx, user: discord.Member, mutetime=None):
-        '''Forces someone to shut up. Usage: *mute [user] [time in mins]'''
-        try:
-            if mutetime is None:
-                await self.client.edit_channel_permissions(user, send_messages=False)
-                await self.client.say(f"{user.mention} is now forced to shut up. :zipper_mouth: ")
-            else:
-                try:
-                    mutetime =int(mutetime)
-                    mutetime = mutetime * 60
-                except ValueError:
-                    return await self.client.say("Your time is an invalid number. Make sure...it is a number.")
-                await self.client.edit_channel_permissions(user, send_messages=False)
-                await self.client.say(f"{user.mention} is now forced to shut up. :zipper_mouth: ")
-                await asyncio.sleep(mutetime)
-                await self.client.edit_channel_permissions(user, send_messages=True)
-                await self.client.say(f"{user.mention} is now un-shutted up.")
+    @commands.command(pass_context=True)
+    @commands.has_role('Staff')
+    async def mute(ctx, user:discord.Member, *args):
+        min = args[0]
+        reason = ' '.join(args[1:])
+        role = get(ctx.message.author.server.roles, name="Muted")
+        await client.add_roles(user, role)
+        await client.delete_message(ctx.message)
+        await client.say(f"{user.mention} has been muted for {min} minutes!", delete_after=5)
+        await client.send_message(user, f"You have been muted in {servername} for {min} minutes. Reason from moderator: {reason}")
+        await asyncio.sleep(min*60)
+        await client.remove_roles(user, role)
 
 
     @commands.command(pass_context = True)
