@@ -21,9 +21,6 @@ from discord.utils import get
 class Moderations:
     def __init__(self, client):
         self.client = client
-        self.tag = '<@284137204081491969>'
-        self.warns = '502068770039136257'
-        self.modlogs = '502068770039136257'
 
 
     @commands.command(pass_context=True)
@@ -192,8 +189,8 @@ class Moderations:
         await self.client.delete_message(ctx.message)
         await self.client.say(f"{member.mention} has been muted for {min} minutes!", 5)
         await self.client.send_message(member, f"You have been muted in {servername} for {min} minutes. Reason from moderator: {reason}")
-        asyncio.sleep(min*60)
-        await self.client.add_roles(user, role)
+        await asyncio.sleep(min*300)
+        await self.client.remove_roles(member, role)
 
     @commands.command(pass_context = True)
     @commands.has_permissions(kick_members=True)
