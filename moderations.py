@@ -21,6 +21,9 @@ from discord.utils import get
 class Moderations:
     def __init__(self, client):
         self.client = client
+        self.tag = '<@284137204081491969>'
+        self.warns = '502068770039136257'
+        self.modlogs = '502068770039136257'
 
 
     @commands.command(pass_context=True)
@@ -168,15 +171,28 @@ class Moderations:
                 return
 
 
-
-
-
     @commands.command(pass_context=True)
-    @commands.has_permissions(kick_members=True)
-    async def mute(self, ctx, user: discord.Member, *, reason: str):
-        msg = "{} was muted by {}, because {}".format (user.mention, ctx.message.author.mention, reason)
+    @commands.has_role('Staff')
+        async def warn(ctx,member:discord.Member, *, reason):
+        userid = member
+        embed = discord.Embed(colour=discord.Colour(0xdb0a0a), timestamp=datetime.datetime.utcfromtimestamp(1541192421))
+        embed.set_author(name="Warn Log", icon_url="https://cdn.discordapp.com/attachments/362056767284445187/508026169971572743/628px-Attention_Sign.svg.png")
+        embed.add_field(name="User", value=f"<@{userid}>")
+        embed.add_field(name="Moderator", value=f"<@{ctx.message.author.id}>")
+        embed.add_field(name="Reason", value=f"{reason}")
+        await self.client.send_message(client.get_channel(warns), embed=embed)
+
+
+        
+    @commands.command(pass_context=True)
+    @commands.has_role('Staff')
+    async def mute(self, ctx, user:discord.Member, *, min, reason):
         role = discord.utils.get(user.server.roles, name='Muted')
-        await self.client.say(msg)
+        await self.client.add_roles(member, role)
+        await self.client.delete_message(ctx.message)
+        await self.client.say(f"{member.mention} has been muted for {min} minutes!", 5)
+        await self.client.send_message(member, f"You have been muted in {servername} for {min} minutes. Reason from moderator: {reason}")
+        asyncio.sleep(min*60)
         await self.client.add_roles(user, role)
 
     @commands.command(pass_context = True)
