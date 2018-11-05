@@ -167,28 +167,17 @@ class Moderations:
 
         
     @commands.command(pass_context=True)
-    async def mute(self, ctx, user: discord.Member, *, reason=None):
-        if ctx.message.author.server_permissions.mute_members:
-            MutedRole = discord.utils.get(ctx.message.server.roles, name='Muted')
-            if reason == None:
-                await self.client.say('**You need a reason to proceed this process.**')
-            else:
-                if time == None:
-                await self.client.say('**You need a time to proceed this process.**')
-            else:
-                embed = discord.Embed(
-                    colour = discord.Colour.purple()
-                )
-                embed.set_author(name='{} Has been muted by {}'.format(user.mention, ctx.message.author.mention)
-                embed.add_field(name='Reasoning', value='reason: {0}'.format(reason), inline=True)
-                embed.add_field(name='Mute Time', value='Mute Time: 120 Mins.'.format(time), inline=True)
-                await self.client.say(embed=embed)
-                await self.client.add_roles(user, MutedRole)
-                await asyncio sleep(120)
-                await self.client.say('{} has been unmuted automatically after 120 Mins!!')
-                await self.client.remove_roles(user, role)
-        else:
-            await self.client.say('**You do not have permission to use this command.** ``Mute Members Permission Required``')
+    @commands.has_permissions(kick_members=True)
+    async def mute(self, ctx, user: discord.Member, *, reason: str):
+        msg = "{} was muted by {} for 120 minutes, because {}".format (user.mention, ctx.message.author.mention, reason)
+        role = discord.utils.get(user.server.roles, name='Muted')
+        await self.client.say(msg)
+        await self.client.add_roles(user, role)
+        await asyncio sleep(120)
+        await self.client.say('{} has been unmuted automatically after 120 Mins!!')
+        await self.client.remove_roles(user, role)
+    else:
+        await self.client.say('**You do not have permission to use this command.** ``Mute Members Permission Required``')
 
 
     @commands.command(pass_context = True)
