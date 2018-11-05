@@ -166,13 +166,28 @@ class Moderations:
 
 
         
-    @commands.command(pass_context=True)
-    async def mute(self, ctx, member:discord.Member, *, reason):
-        if "Staff" in [y.name.lower() for y in ctx.message.author.roles]:
-            await self.client.add_roles(member, Muted)
-            await self.client.say("**<@{}>** was muted successfully.".format(member.id))
-            callout_channel = self.client.get_channel('502068770039136257')
-            await self.client.send_message(callout_channel, embed=discord.Embed(title="Mute", description='<@{}> has muted <@{}> for '.format(str(ctx.message.author.id), member.id) + reason, colour=discord.Colour.red()))
+    @client.command(pass_context=True)
+    async def mute(self, ctx, user: discord.Member, time=None, *, reason=None):
+        if ctx.message.author.server_permissions.mute_members:
+            MutedRole = discord.utils.get(ctx.message.server.roles, name='Muted')
+            if reason == None:
+                await self.client.say('**You need a reason to proceed this process.**')
+            else:
+                if time == None:
+                await self.client.say('**You need a time to proceed this process.**')
+            else:
+                embed = discord.Embed(
+                    colour = discord.Colour.purple()
+                )
+                embed.set_author(name='{} Has been muted'.format(user.name))
+                embed.add_field(name='Reasoning', value='reason: {0}'.format(reason), inline=True)
+                embed.add_field(name='Mute Time', value='Mute Time: {0}'.format(time), inline=True)
+                await self.client.say(embed=embed)
+                await self.client.add_roles(user, MutedRole)
+                await asyncio sleep(time)
+                await self.client.remove_roles(user, role)
+        else:
+            await self.client.say('**You do not have permission to use this command.** ``Mute Members Permission Required``')
 
 
     @commands.command(pass_context = True)
