@@ -167,7 +167,7 @@ class Moderations:
 
         
     @commands.command(pass_context=True)
-    async def mute(self, ctx, user: discord.Member, time=None, *, reason=None):
+    async def mute(self, ctx, user: discord.Member, *, reason=None):
         if ctx.message.author.server_permissions.mute_members:
             MutedRole = discord.utils.get(ctx.message.server.roles, name='Muted')
             if reason == None:
@@ -179,12 +179,13 @@ class Moderations:
                 embed = discord.Embed(
                     colour = discord.Colour.purple()
                 )
-                embed.set_author(name='{} Has been muted'.format(user.name))
+                embed.set_author(name='{} Has been muted by {}'.format(user.mention, ctx.message.author.mention)
                 embed.add_field(name='Reasoning', value='reason: {0}'.format(reason), inline=True)
-                embed.add_field(name='Mute Time', value='Mute Time: {0}'.format(time), inline=True)
+                embed.add_field(name='Mute Time', value='Mute Time: 120 Mins.'.format(time), inline=True)
                 await self.client.say(embed=embed)
                 await self.client.add_roles(user, MutedRole)
-                await asyncio sleep(time)
+                await asyncio sleep(120)
+                await self.client.say('{} has been unmuted automatically after 120 Mins!!')
                 await self.client.remove_roles(user, role)
         else:
             await self.client.say('**You do not have permission to use this command.** ``Mute Members Permission Required``')
