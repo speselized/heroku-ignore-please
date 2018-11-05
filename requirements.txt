@@ -8,3 +8,4 @@ websockets
 chardet
 opuslib
 pynacl==1.2.1
+pylyrics ~= 1.1.0
