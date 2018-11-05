@@ -6,12 +6,13 @@ import youtube_dl
 import asyncio
 import time
 import logging
+import json
 import discord, datetime, time
 import random
 from datetime import datetime
 from discord import Game, InvalidArgument, HTTPException
-import json
 from os import system
+from image_search import search_for_image
 from time import sleep
 from discord import opus
 from discord.ext import commands
@@ -258,6 +259,38 @@ class Music:
             await state.voice.move_to(summoned_channel)
 
         return True
+    
+    
+    @commands.command(pass_context=True)
+    async def lyrics(self, ctx, *args):
+        """Ex: '!lyrics artist name - song name'"""
+        try:
+            arr = '{}'.format(" ".join(args)).split(' - ')
+            lyrics = lyricfetcher.get_lyrics('lyricswikia', arr[0], arr[1])
+            if lyrics is None or lyrics == 404 or lyrics == "404":
+                message = await self.client.say('Not found. ¯\_(ツ)_/¯ \
+                                    *Format:* `"Artist - Song"`')
+                await asyncio.sleep(10)
+                await self.client.delete_message(message)
+            else: await self.client.say('```' + lyrics + '```')
+        except:
+            await self.client.send_message(ctx.message.channel, \
+                "Bad syntax - Format: `artist - song`")
+            
+            
+    @commands.command(pass_context=True)
+    async def yt(self, ctx, *args):
+        """Search and link a youtube video"""
+
+        url = "https://www.youtube.com/results?search_query=" + \
+                urllib.parse.quote(" ".join(args).lower())
+
+        for vid in BeautifulSoup(urllib.request.urlopen(url).read(), \
+                "html5lib").findAll(attrs={'class': 'yt-uix-tile-link'}, \
+                limit = 1):
+            if "user" not in vid["href"] and "googleads" not in vid["href"]:
+                await self.client.say('https://www.youtube.com' + vid['href'])
+                break
 
 def setup(client):
     client.add_cog(Music(client))
