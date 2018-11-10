@@ -167,17 +167,17 @@ class Moderations:
 
         
     @commands.command(pass_context=True)
-    @commands.has_permissions(kick_members=True)
-    async def mute(self, ctx, user: discord.Member, *, reason: str):
-        msg = "{} was muted by {} for 120 minutes, because {}".format (user.mention, ctx.message.author.mention, reason)
-        role = discord.utils.get(user.server.roles, name='Muted')
-        await self.client.say(msg)
-        await self.client.add_roles(user, role)
-        await asyncio sleep(120)
-        await self.client.say('{} has been unmuted automatically after 120 Mins!!')
-        await self.client.remove_roles(user, role)
-    else:
-        await self.client.say('**You do not have permission to use this command.** ``Mute Members Permission Required``')
+    @commands.has_role('Staff')
+    async def mute(self, ctx, member:discord.Member, *args):
+        min = args[0]
+        reason = ' '.join(args[1:])
+        role = get(ctx.message.author.server.roles, name="Muted")
+        await self.client.add_roles(member, role)
+        await self.client.delete_message(ctx.message)
+        await self.client.say(f"{member.mention} has been muted for {min} minutes!", delete_after=5)
+        await self.client.send_message(member, f"You have been muted in {servername} for {min} minutes. Reason from moderator: {reason}")
+        await asyncio.sleep(min*60)
+        await self.client.remove_roles(member, role)
 
 
     @commands.command(pass_context = True)
