@@ -12,7 +12,6 @@ import random
 from datetime import datetime
 from discord import Game, InvalidArgument, HTTPException
 from os import system
-from image_search import search_for_image
 from time import sleep
 from discord import opus
 from discord.ext import commands
