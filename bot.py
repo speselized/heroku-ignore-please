@@ -20,7 +20,7 @@ from discord.utils import get
 TOKEN = 'NDkwNDQ3NTUzMjIyMTQ4MDk3.Dn6o0g.I87hdy0DJps4vOcFuo34GmFNTt0'
 client = commands.Bot(command_prefix = '?')
 
-extensions = ['fun', 'info', 'members', 'moderations', 'music', 'animals']
+extensions = ['fun', 'moderations', 'music']
 
 @client.event
 async def on_ready():
