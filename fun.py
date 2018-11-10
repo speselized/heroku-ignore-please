@@ -4,14 +4,17 @@ from discord.ext import commands
 from discord import Permissions
 import youtube_dl
 import asyncio
+import async_timeout
+import aiohttp
+import json
 import time
 import logging
 import discord, datetime, time
 import random
 from datetime import datetime
 from discord import Game, InvalidArgument, HTTPException
-import json
 from os import system
+from random import randint
 from time import sleep
 from discord import opus
 from discord.ext import commands
@@ -64,6 +67,27 @@ class Fun:
                    'A bit lower...', 'WHAT DO YOU WANT?!', 'bleep', 'Well hello there ;)',
                    '*blush* not now! everybody is watching..', '*falls over*', '*winks*',
                    'N-nani']))
+            
+            
+    @commands.command(pass_context=True, aliases=['d'])
+    async def dog(self, ctx):
+        """(d) random dog picture"""
+        print('dog')
+        isVideo = True
+        while isVideo:
+            async with aiohttp.ClientSession() as cs:
+                async with cs.get('https://random.dog/woof.json') as r:
+                    res = await r.json()
+                    res = res['url']
+                    cs.close()
+            if res.endswith('.mp4'):
+                pass
+            else:
+                isVideo = False
+        em = discord.Embed()
+        await self.client.send_message(ctx.message.channel, content=ctx.message.author.mention, embed=em.set_image(url=res))
+        await self.client.delete_message(ctx.message)
+        
 
 
     @commands.command(pass_context=True)
