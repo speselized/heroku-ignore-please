@@ -272,7 +272,8 @@ class Music:
                                     *Format:* `"Artist - Song"`')
                 await asyncio.sleep(10)
                 await self.client.delete_message(message)
-            else: await self.client.say('```' + lyrics + '```')
+            else: 
+                await self.client.say('```' + lyrics + '```')
         except:
             await self.client.send_message(ctx.message.channel, \
                 "Bad syntax - Format: `artist - song`")
