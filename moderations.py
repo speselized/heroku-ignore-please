@@ -50,6 +50,47 @@ class Moderations:
         await self.client.add_roles(user, role)
         embed= discord.Embed(title="Permit.", description="***{} has been given permission to post images / links!*** ".format(user.mention), color=0xF35353)
         await self.client.say(embed=embed)
+        
+        
+    @commands.command(name="whois", pass_context=True)
+    async def user_info(self, ctx, user: discord.Member = None):
+        """Gets information about the desired user (defaults to the message sender)"""
+        if user is None:
+            await self.client.say("```xl\n"
+                               "User: {0}\n"
+                               "Nickname: {0.nick}\n"
+                               "ID: {0.id}\n"
+                               "Avatar: {0.avatar_url}\n"
+                               "Created At: {0.created_at}\n"
+                               "Joined On: {0.joined_at}\n"
+                               "Game: {0.game}\n"
+                               "Roles: {1}\n"
+                               "```".format(ctx.message.author, ", ".join([x.name for x in ctx.message.author.roles if x.name != "@everyone"])))
+        else:
+            await self.client.say("```xl\n"
+                               "User: {0}\n"
+                               "Nickname: {0.nick}\n"
+                               "ID: {0.id}\n"
+                               "Avatar: {0.avatar_url}\n"
+                               "Created At: {0.created_at}\n"
+                               "Joined On: {0.joined_at}\n"
+                               "Game: {0.game}\n"
+                               "Roles: {1}\n"
+                               "```".format(user, ", ".join([x.name for x in user.roles if x.name != "@everyone"])))
+
+    @commands.command(name="serverinfo", pass_context=True)
+    async def server_info(self, ctx):
+        """Gets information about the current server"""
+        await self.client.say("```xl\n"
+                           "Guild: {0}\n"
+                           "ID: {0.id}\n"
+                           "Region: {0.region}\n"
+                           "Member Count: {1}\n"
+                           "Owner: {0.owner}\n"
+                           "Icon: {0.icon_url}\n"
+                           "Roles: {2}"
+                           "```".format(ctx.message.server, sum(1 for x in ctx.message.server.members),
+                                        ", ".join([x.name for x in ctx.message.server.roles])))
 
 
     @commands.command(pass_context=True)
