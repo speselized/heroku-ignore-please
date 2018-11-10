@@ -169,14 +169,13 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def mute(self, ctx, member:discord.Member, *args):
-        servername = ctx.message.server
         min = args[0]
         reason = ' '.join(args[1:])
         role = get(ctx.message.author.server.roles, name="Muted")
         await self.client.add_roles(member, role)
         await self.client.delete_message(ctx.message)
         await self.client.say("{} has been muted for {} minutes!".format (member.mention, min), delete_after=5)
-        await self.client.send_message(member, "You have been muted in {} for {} minutes. Reason from moderator: {}".format (servername, min, reason)
+        await self.client.send_message(member, "You have been muted in {} for {} minutes. Reason from moderator: {}".format (ctx.message.server.name, min, reason)
         await asyncio.sleep(min*60)
         await self.client.remove_roles(member, role)
 
