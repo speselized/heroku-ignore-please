@@ -213,7 +213,7 @@ class Moderations:
         msg = ctx.message.content.split(" ")
         msg2 = " ".join(msg[2:])
         await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}** for: **{msg2}**")
-        await self.client.say(f"{user.name} has been warned because {msg2")
+        await self.client.say(f"{user.name} has been warned because {msg2}")
         if ctx.message.server.id == "502034450692177921":
             channel = self.client.get_channel("502068770039136257")
             embed = discord.Embed(title="Warn", color=discord.Color.red())
