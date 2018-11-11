@@ -209,17 +209,20 @@ class Moderations:
         
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
-    async def mute(self, ctx, member:discord.Member, *args):
-        min = args[0]
-        reason = ' '.join(args[1:])
-        role = get(ctx.message.author.server.roles, name="Muted")
-        await self.client.add_roles(member, role)
-        await self.client.delete_message(ctx.message)
-        await self.client.say("{} has been muted for {} minutes!".format (member.mention, min), delete_after=5)
-        await self.client.send_message(member, "You have been muted in {} for {} minutes. Reason from moderator: {}".format (ctx.message.server.name, min, reason)
-        await asyncio.sleep(min*60)
-        await self.client.remove_roles(member, role)
-
+    async def warn(self, ctx, user: discord.User, reason):
+        msg = ctx.message.content.split(" ")
+        msg2 = " ".join(msg[2:])
+        await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}** for: **{msg2}**")
+        await self.client.say(f"{user.name} has been warned because {msg2")
+        if ctx.message.server.id == "502034450692177921":
+            channel = self.client.get_channel("502068770039136257")
+            embed = discord.Embed(title="Warn", color=discord.Color.red())
+            embed.add_field(name="User", value=user.mention)
+            embed.add_field(name="Moderator", value=ctx.message.author.mention)
+            embed.add_field(name="Reason", value=reason)
+            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            embed.set_thumbnail(url=user.avatar_url)
+            await self.client.send_message(channel, embed=embed)
 
     @commands.command(pass_context = True)
     @commands.has_permissions(kick_members=True)
