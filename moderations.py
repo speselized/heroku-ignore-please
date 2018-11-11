@@ -212,8 +212,8 @@ class Moderations:
     async def warn(self, ctx, user: discord.User, reason):
         msg = ctx.message.content.split(" ")
         msg2 = " ".join(msg[2:])
-        await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}** for: **{msg2}**")
-        await self.client.say(f"{user.name} has been warned because {msg2}")
+        await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
+        await self.client.say(f"{user.name} has been warned Reason: {msg2}")
         if ctx.message.server.id == "502034450692177921":
             channel = self.client.get_channel("502068770039136257")
             embed = discord.Embed(title="Warn", color=discord.Color.red())
@@ -223,17 +223,58 @@ class Moderations:
             embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
             await self.client.send_message(channel, embed=embed)
+            
+            
+            
+    @commands.command(pass_context=True)
+    @commands.has_role('Staff')
+    async def mute(self, ctx, user: discord.User, reason):
+        if ctx.message.server.id == "502034450692177921":
+            msg = ctx.message.content.split(" ")
+            msg2 = " ".join(msg[2:])
+            await self.client.send_message(user, f"You have been muted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
+            await self.client.say(f"{user.name} has been Muted Reason: {msg2}")
+            channel = self.client.get_channel("502068770039136257")
+            embed = discord.Embed(title="Mute", color=discord.Color.red())
+            embed.add_field(name="User", value=user.mention)
+            embed.add_field(name="Moderator", value=ctx.message.author.mention)
+            embed.add_field(name="Reason", value=reason)
+            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            embed.set_thumbnail(url=user.avatar_url)
+            role = discord.utils.get(ctx.message.server.roles, id="502057487252455424")
+            await self.client.add_roles(user, role)
+            overwrite = discord.PermissionOverwrite()
+            overwrite.speak = False
+            overwrite.send_messages = False
+            for channel in ctx.message.server.channels:
+                await self.client.edit_channel_permissions(channel, role, overwrite)
+            channel = self.client.get_channel("502068770039136257")
+            await self.client.send_message(channel, embed=embed)
 
-    @commands.command(pass_context = True)
-    @commands.has_permissions(kick_members=True)
-    async def unmute(self, ctx, user: discord.Member=None):
-        if not user:
-            await self.client.say("Please provide user.")
-        else:
-            msg = "{} has been unmuted by {}".format (user.mention, ctx.message.author.mention)
-            role = discord.utils.get(user.server.roles, name='Muted')
+    @commands.command(pass_context=True)
+    @commands.has_role('Staff')
+    async def unmute(self, ctx, user: discord.User, reason):
+        if ctx.message.server.id == "502034450692177921":
+            msg = ctx.message.content.split(" ")
+            msg2 = " ".join(msg[2:])
+            await self.client.send_message(user, f"You have been unmuted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
+            await self.client.say(f"{user.name} has been unmuted Reason: {msg2}")
+            channel = self.client.get_channel("502068770039136257")
+            embed = discord.Embed(title="Unmute", color=discord.Color.red())
+            embed.add_field(name="User", value=user.mention)
+            embed.add_field(name="Moderator", value=ctx.message.author.mention)
+            embed.add_field(name="Reason", value=reason)
+            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            embed.set_thumbnail(url=user.avatar_url)
+            role = discord.utils.get(ctx.message.server.roles, id="502057487252455424")
             await self.client.remove_roles(user, role)
-            await self.client.say(msg)
+            overwrite = discord.PermissionOverwrite()
+            overwrite.speak = False
+            overwrite.send_messages = False
+            for channel in ctx.message.server.channels:
+                await self.client.edit_channel_permissions(channel, role, overwrite)
+            channel = self.client.get_channel("502068770039136257")
+            await self.client.send_message(channel, embed=embed)
 
     @commands.command(pass_context = True)
     @commands.has_role('Staff')
