@@ -91,4 +91,4 @@ async def iconify(ctx, *args):
     print('iconify: ' + iconstring)
 
 
-client.run(TOKEN)
+client.run(os.environ["TOKEN"])
