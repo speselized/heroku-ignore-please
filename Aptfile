@@ -1,7 +1,10 @@
 libopus0
 git
-libopus-dev
+libopus-dev -y
 libssl-dev
-libffi-dev
-libsodium-dev
+libffi-dev -y
+libsodium-dev -y
 :repo:ppa:mc3man/xerus-media -y
+build-essential -y
+unzip -y
+software-properties-common -y
