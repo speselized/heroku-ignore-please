@@ -1,5 +1,8 @@
 import discord
 import os
+import traceback
+import sys
+import re
 from discord.ext import commands
 from discord import Permissions
 import youtube_dl
@@ -259,12 +262,12 @@ class Moderations:
             
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
-    async def mute(self, ctx, user: discord.User, *, time:TimeConverter = None, reason):
+    async def mute(self, ctx, user: discord.User, *, time:TimeConverter = None):
         if ctx.message.server.id == "502034450692177921":
             msg = ctx.message.content.split(" ")
             msg2 = " ".join(msg[2:])
             await self.client.send_message(user, f"You have been muted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
-            await self.client.say(f"{user.name} has been muted for {time}s, Reason: {msg2}" if time else f"Muted {user.name}. Reason: {msg2}")
+            await self.client.say(f"{user.name} has been muted for {time}s, Reason: {msg2}" if time else "Muted {user.name}. Reason: {msg2}")
             if time:
                 await asyncio.sleep(time)
                 await self.client.remove_roles(user, role)
