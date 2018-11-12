@@ -18,6 +18,37 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions
 from discord.utils import get
 
+
+
+time_regex = re.compile("(?:(\d{1,5})(h|s|m|d))+?")
+time_dict = {"h":3600, "s":1, "m":60, "d":86400}
+
+class TimeConverter(commands.Converter):
+
+    async def convert(self):
+
+        args = self.argument.lower()
+
+        matches = re.findall(time_regex, args)
+
+        time = 0
+
+        for v, k in matches:
+
+            try:
+
+                time += time_dict[k]*float(v)
+
+            except KeyError:
+
+                raise commands.BadArgument("{} is an invalid time-key! h/m/s/d are valid!".format(k))
+
+            except ValueError:
+
+                raise commands.BadArgument("{} is not a number!".format(v))
+
+        return time
+
 class Moderations:
     def __init__(self, client):
         self.client = client
@@ -228,28 +259,48 @@ class Moderations:
             
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
-    async def mute(self, ctx, user: discord.User, reason):
+    async def mute(self, ctx, user: discord.User, *, time:TimeConverter = None):
         if ctx.message.server.id == "502034450692177921":
             msg = ctx.message.content.split(" ")
             msg2 = " ".join(msg[2:])
             await self.client.send_message(user, f"You have been muted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
-            await self.client.say(f"{user.name} has been Muted Reason: {msg2}")
-            channel = self.client.get_channel("502068770039136257")
-            embed = discord.Embed(title="Mute", color=discord.Color.red())
-            embed.add_field(name="User", value=user.mention)
-            embed.add_field(name="Moderator", value=ctx.message.author.mention)
-            embed.add_field(name="Reason", value=reason)
-            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
-            embed.set_thumbnail(url=user.avatar_url)
-            role = discord.utils.get(ctx.message.server.roles, id="502057487252455424")
-            await self.client.add_roles(user, role)
-            overwrite = discord.PermissionOverwrite()
-            overwrite.speak = False
-            overwrite.send_messages = False
-            for channel in ctx.message.server.channels:
-                await self.client.edit_channel_permissions(channel, role, overwrite)
-            channel = self.client.get_channel("502068770039136257")
-            await self.client.send_message(channel, embed=embed)
+            await self.client.say(f"{user.name} has been muted for {time}s, Reason: {msg2}" if time else "Muted {user.name}. Reason: {msg2}")
+            if time:
+                await asyncio.sleep(time)
+                await self.client.remove_roles(user, role)
+                return
+            else:
+                channel = self.client.get_channel("502068770039136257")
+                embed = discord.Embed(title="Mute", color=discord.Color.red())
+                embed.add_field(name="User", value=user.mention)
+                embed.add_field(name="Moderator", value=ctx.message.author.mention)
+                embed.add_field(name="Reason", value=reason)
+                embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+                embed.set_thumbnail(url=user.avatar_url)
+                role = discord.utils.get(ctx.message.server.roles, id="502057487252455424")
+                await self.client.add_roles(user, role)
+                overwrite = discord.PermissionOverwrite()
+                overwrite.speak = False
+                overwrite.send_messages = False
+                for channel in ctx.message.server.channels:
+                    await self.client.edit_channel_permissions(channel, role, overwrite)
+                channel = self.client.get_channel("502068770039136257")
+                await self.client.send_message(channel, embed=embed)
+                
+                
+
+    @mute.error
+    async def mute_error(self, error, ctx):
+        if isinstance(error, commands.CheckFailure):
+            pass
+        if isinstance(error, commands.BadArgument):
+            await self.client.send_message(ctx.message.channel, error)
+        else:
+            error = getattr(error, 'original', error)
+            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)               
+                
+
 
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
