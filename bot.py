@@ -44,7 +44,7 @@ async def on_member_join(member):
         return
     else:
         channel = discord.utils.get(client.get_all_channels(), server__name='Rain\'s Official Server', name='welcome')
-            embed = discord.Embed(title=f'Welcome {member.name} to {member.server.name}', description='Do not forget to check #511836403534004261 and never try to break any one of them', color = discord.Color.red())
+            embed = discord.Embed(title=f'Welcome {member.name} to {member.server.name}', description='Do not forget to check the rules and never try to break any one of them', color = discord.Color.red())
             embed.add_field(name=f'__Thanks for joining__', value='**Hope you will be active here.**', inline=True)
             embed.add_field(name='Your join position is', value=member.joined_at)
             embed.set_thumbnail(url=member.avatar_url)
