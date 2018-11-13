@@ -44,7 +44,7 @@ async def on_member_join(member):
         return
     else:
         channel = discord.utils.get(client.get_all_channels(), server__name='Rain\'s Official Server', name='welcome')
-            await client.send_message(channel, f'Welcome {member.name} to {member.server.name}. Thanks for joining! Your join position is {member.joined_at}.')
+            await client.send_message(channel, f'Welcome {member.name} to {member.server.name}. Thanks for joining! Make sure to read the rules also.')
 
 
 
