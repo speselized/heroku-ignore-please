@@ -35,6 +35,15 @@ async def on_ready():
     for x in range(len(servers)):
         print(' '+servers[x-1].name)
     print('--------------------------------------------------------------------------------------------------------------')
+    
+    
+    
+@client.event
+async def on_member_join(member):
+    for channel in member.server.channels:
+        if channel.name == 'welcome':
+            msg = 'Welcome {} I hope you enjoy it at {} have fun.'.format(User.name, Server.name))
+            await client.send_message(channel, msg)
 
 
 @client.command()
