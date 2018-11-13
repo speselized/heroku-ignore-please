@@ -203,9 +203,9 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def ping(self, ctx):
-        msg = await self.client.say('Pong! :ping_pong:')
-        await asyncio.sleep(5)
-        await self.client.delete_message(msg)
+        resp = await self.client.say('Pong! Loading...')
+        diff = resp.timestamp - ctx.message.timestamp
+        await self.client.edit_message(resp, f'Pong! That took {1000*diff.total_seconds():.1f}ms.')
 
 
 
