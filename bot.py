@@ -43,8 +43,8 @@ async def on_member_join(member):
     if member.server.id != '511148640710950933':
         return
     else:
-        channel = discord.utils.get(client.get_all_channels(), server__name='Rain\'s Official Server', name='welcome')
-            await client.send_message(channel, 'Welcome {} to {}. Thanks for joining! Make sure to read the rules also.'.format(member.name, member.server.name))
+        channel = discord.utils.get(client.get_all_channels(), server__name='Rains Offical', name='welcome')
+        await client.send_message(channel, f'Welcome {member.name} to {member.server.name}. Thanks for joining! Make sure to read the rules also.'
 
 
 
