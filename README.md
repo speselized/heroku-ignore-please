@@ -8,7 +8,7 @@
 I added it here for 2 reasons. One reason is because I host my bot on heroku so I don't have to manually host it myself.
 2nd reason is because people can just use what I created. If you don't know what you are doing do not proceed.
 
-![](header.png)
+![](7c05184bb401bda003e9e89c022c1f4a.png)
 
 
 ## Help
