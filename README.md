@@ -1,4 +1,4 @@
-# Website – [Rainy-Nights](speselized.github.io)
+# Website – [Rainy-Nights](https://speselized.github.io)
 # Discord Server – [Rain#0007](http://discord.gg/bGN7D97)
 
 # Rainy Nights
