@@ -1,5 +1,5 @@
-# Website
-speselized.github.io
+# Website – [Rainy-Nights](speselized.github.io)
+# Discord Server – [Rain#0007](http://discord.gg/bGN7D97)
 
 # Rainy Nights
 > This is a short project I've been working on. It's an python discord bot and it does mostly everything.
