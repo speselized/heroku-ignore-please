@@ -292,7 +292,7 @@ class Moderations:
             embed.add_field(name="Reason", value=reason)
             embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
-            role = discord.utils.get(ctx.message.server.roles, id="502057487252455424")
+            role = discord.utils.get(ctx.message.server.roles, id="511801831064731648")
             await self.client.remove_roles(user, role)
             overwrite = discord.PermissionOverwrite()
             overwrite.speak = False
