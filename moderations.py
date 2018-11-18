@@ -16,7 +16,6 @@ from discord import Game, InvalidArgument, HTTPException
 import json
 from os import system
 from time import sleep
-from discord import opus
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 from discord.utils import get
@@ -248,37 +247,7 @@ class Moderations:
             
             
             
-                
-    @commands.command(pass_context=True)
-    @commands.has_role('Staff')
-    async def muteoriginal(self, ctx, member:discord.Member, time:TimeConverter = None, *, reason:str):
-        if ctx.message.server.id == "502034450692177921":
-            msg = ctx.message.content.split(" ")
-            msg2 = " ".join(msg[2:])
-            await self.client.send_message(member, f"You have been muted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
-            await self.client.say(f"{member.name} has been muted. Reason: {msg2}")
-            if time:
-                await self.client.say(f"{member.name} has been muted for {time}s. Reason: {reason}")
-                await asyncio.sleep(time)
-                await self.client.remove_roles(member, role)
-                 return
-             else:
-                 channel = self.client.get_channel("502068770039136257")
-                 embed = discord.Embed(title="Mute", color=discord.Color.red())
-                 embed.add_field(name="User", value=member.mention)
-                 embed.add_field(name="Moderator", value=ctx.message.author.mention)
-                 embed.add_field(name="Reason", value=reason)
-                 embed.set_footer(text=self.client.member.name, icon_url=self.client.member.avatar_url)
-                 embed.set_thumbnail(url=member.avatar_url)
-                 role = discord.utils.get(ctx.message.server.roles, id="502057487252455424")
-                 await self.client.add_roles(member, role)
-                 overwrite = discord.PermissionOverwrite()
-                 overwrite.speak = False
-                 overwrite.send_messages = False
-                 for channel in ctx.message.server.channels:
-                     await self.client.edit_channel_permissions(channel, role, overwrite)
-                 channel = self.client.get_channel("502068770039136257")
-                 await self.client.send_message(channel, embed=embed)
+               
                     
                     
                     
