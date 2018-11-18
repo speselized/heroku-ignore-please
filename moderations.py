@@ -22,6 +22,24 @@ from discord.ext.commands import has_permissions
 from discord.utils import get
 
 
+time_regex = re.compile("(?:(\d{1,5})(h|s|m|d))+?")
+time_dict = {"h":3600, "s":1, "m":60, "d":86400}
+
+
+class TimeConverter(commands.Converter):
+    async def convert(self):
+        args = self.argument.lower()
+        matches = re.findall(time_regex, args)
+        time = 0
+        for v, k in matches:
+            try:
+                time += time_dict[k]*float(v)
+            except KeyError:
+                raise commands.BadArgument("{} is an invalid time-key! h/m/s/d are valid!".format(k))
+            except ValueError:
+                raise commands.BadArgument("{} is not a number!".format(v))
+        return time
+
 class Moderations:
     def __init__(self, client):
         self.client = client
@@ -231,7 +249,65 @@ class Moderations:
             
             
                 
-                             
+    @commands.command(pass_context=True)
+    @commands.has_role('Staff')
+    async def muteoriginal(self, ctx, member:discord.Member, time:TimeConverter = None, *, reason:str):
+        if ctx.message.server.id == "502034450692177921":
+            msg = ctx.message.content.split(" ")
+            msg2 = " ".join(msg[2:])
+            await self.client.send_message(member, f"You have been muted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
+            await self.client.say(f"{member.name} has been muted. Reason: {msg2}")
+            if time:
+                await self.client.say(f"{member.name} has been muted for {time}s. Reason: {reason}")
+                await asyncio.sleep(time)
+                await self.client.remove_roles(member, role)
+                 return
+             else:
+                 channel = self.client.get_channel("502068770039136257")
+                 embed = discord.Embed(title="Mute", color=discord.Color.red())
+                 embed.add_field(name="User", value=member.mention)
+                 embed.add_field(name="Moderator", value=ctx.message.author.mention)
+                 embed.add_field(name="Reason", value=reason)
+                 embed.set_footer(text=self.client.member.name, icon_url=self.client.member.avatar_url)
+                 embed.set_thumbnail(url=member.avatar_url)
+                 role = discord.utils.get(ctx.message.server.roles, id="502057487252455424")
+                 await self.client.add_roles(member, role)
+                 overwrite = discord.PermissionOverwrite()
+                 overwrite.speak = False
+                 overwrite.send_messages = False
+                 for channel in ctx.message.server.channels:
+                     await self.client.edit_channel_permissions(channel, role, overwrite)
+                 channel = self.client.get_channel("502068770039136257")
+                 await self.client.send_message(channel, embed=embed)
+                    
+                    
+                    
+                    
+                    
+    @commands.command(pass_context=True)
+    @commands.has_permissions(manage_messages=True)
+    async def mute(self, ctx, member:discord.Member, time:TimeConverter = None, *, reason:str):
+        role = discord.utils.get(ctx.message.server.roles, name="Muted")
+        await self.client.add_roles(member, role)
+        bembed = discord.Embed(title="User Muted.", color=16202876)
+        bembed.add_field(name="Muted user:", value=str(member), inline=False)
+        bembed.add_field(name="Reason:", value=str(reason), inline=False)
+        bembed.add_field(name="Moderator:", value=str(ctx.message.author), inline=False)
+        if time:
+            bembed.add_field(name="Lasts for:", value=str(time), inline=False)
+            bchannel = discord.Object('511832933829443594')
+            await self.client.send_message(bchannel, embed=bembed)
+            bchannel = discord.Object('511148640710950935')
+            await self.client.send_message(bchannel, embed=bembed)
+        else:
+            bchannel = discord.Object('511832933829443594')
+            await self.client.send_message(bchannel, embed=bembed)
+            bchannel = discord.Object('511148640710950935')
+            await self.client.send_message(bchannel, embed=bembed)
+        if time:
+            await asyncio.sleep(time)
+            await self.client.remove_roles(member, role)
+                    
                 
 
 
