@@ -18,7 +18,8 @@ You might have to change some things for example server id's, channel id's, and 
 
 
 ## Release History
-
+* 0.3.0
+    * CHANGE: Added mute, unmute and warn. (Will still be adding updates to the bot but for now I'm done.)
 * 0.2.1
     * CHANGE: Update moderations commands (Still not fixed corrently)
 * 0.2.0
