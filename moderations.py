@@ -235,7 +235,7 @@ class Moderations:
         msg2 = " ".join(msg[2:])
         await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been warned Reason: {msg2}")
-        if ctx.message.server.id == "502034450692177921":
+        if ctx.message.server.id == "511148640710950933":
             channel = self.client.get_channel("502068770039136257")
             embed = discord.Embed(title="Warn", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
@@ -254,28 +254,27 @@ class Moderations:
                     
                     
     @commands.command(pass_context=True)
-    @commands.has_permissions(manage_messages=True)
+    @commands.has_role('Staff')
     async def mute(self, ctx, member:discord.Member, time:TimeConverter = None, *, reason:str):
-        role = discord.utils.get(ctx.message.server.roles, name="Muted")
-        await self.client.add_roles(member, role)
-        bembed = discord.Embed(title="User Muted.", color=16202876)
-        bembed.add_field(name="Muted user:", value=str(member), inline=False)
-        bembed.add_field(name="Reason:", value=str(reason), inline=False)
-        bembed.add_field(name="Moderator:", value=str(ctx.message.author), inline=False)
-        if time:
-            bembed.add_field(name="Lasts for:", value=str(time), inline=False)
-            bchannel = discord.Object('511832933829443594')
-            await self.client.send_message(bchannel, embed=bembed)
-            bchannel = discord.Object('511148640710950935')
-            await self.client.send_message(bchannel, embed=bembed)
-        else:
-            bchannel = discord.Object('511832933829443594')
-            await self.client.send_message(bchannel, embed=bembed)
-            bchannel = discord.Object('511148640710950935')
-            await self.client.send_message(bchannel, embed=bembed)
-        if time:
-            await asyncio.sleep(time)
-            await self.client.remove_roles(member, role)
+        if ctx.message.server.id == "511148640710950933":
+            role = discord.utils.get(ctx.message.server.roles, name="Muted")
+            await self.client.add_roles(member, role)
+            bembed = discord.Embed(title="User Muted.", color=16202876)
+            bembed.add_field(name="Muted user:", value=str(member), inline=False)
+            bembed.add_field(name="Reason:", value=str(reason), inline=False)
+            bembed.add_field(name="Moderator:", value=str(ctx.message.author), inline=False)
+            bembed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            bembed.set_thumbnail(url=user.avatar_url)
+            if time:
+                bembed.add_field(name="Lasts for:", value=str(time), inline=False)
+                bchannel = discord.Object('511832933829443594')
+                await self.client.send_message(bchannel, embed=bembed)
+            else:
+                bchannel = discord.Object('511832933829443594')
+                await self.client.send_message(bchannel, embed=bembed)
+            if time:
+                await asyncio.sleep(time)
+                await self.client.remove_roles(member, role)
                     
                 
 
@@ -283,7 +282,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def unmute(self, ctx, user: discord.User, reason):
-        if ctx.message.server.id == "502034450692177921":
+        if ctx.message.server.id == "511148640710950933":
             msg = ctx.message.content.split(" ")
             msg2 = " ".join(msg[2:])
             await self.client.send_message(user, f"You have been unmuted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
@@ -302,7 +301,7 @@ class Moderations:
             overwrite.send_messages = False
             for channel in ctx.message.server.channels:
                 await self.client.edit_channel_permissions(channel, role, overwrite)
-            channel = self.client.get_channel("502068770039136257")
+            channel = self.client.get_channel("511832933829443594")
             await self.client.send_message(channel, embed=embed)
 
     @commands.command(pass_context = True)
