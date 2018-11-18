@@ -263,8 +263,6 @@ class Moderations:
             bembed.add_field(name="Muted user:", value=str(member), inline=False)
             bembed.add_field(name="Reason:", value=str(reason), inline=False)
             bembed.add_field(name="Moderator:", value=str(ctx.message.author), inline=False)
-            bembed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
-            bembed.set_thumbnail(url=user.avatar_url)
             if time:
                 bembed.add_field(name="Lasts for:", value=str(time), inline=False)
                 bchannel = discord.Object('511832933829443594')
