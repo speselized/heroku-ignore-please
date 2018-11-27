@@ -306,7 +306,7 @@ class Moderations:
             bembed.add_field(name="Moderator:", value=str(ctx.message.author), inline=False)
             bembed.add_field(name="Reason:", value=str(reason), inline=False)
             bembed.add_field(name="Lasts for:", value=str(time), inline=False)
-            bembed.set_footer(text=self.client.member.name, icon_url=self.client.member.avatar_url)
+            bembed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
             bembed.set_thumbnail(url=member.avatar_url)
             bchannel = discord.Object('511832933829443594')
             await self.client.send_message(bchannel, embed=bembed)
