@@ -77,6 +77,7 @@ class Moderations:
         
         
     @commands.command(name="whois", pass_context=True)
+    @commands.has_role('Staff')
     async def user_info(self, ctx, user: discord.Member = None):
         """Gets information about the desired user (defaults to the message sender)"""
         if user is None:
@@ -103,6 +104,7 @@ class Moderations:
                                "```".format(user, ", ".join([x.name for x in user.roles if x.name != "@everyone"])))
 
     @commands.command(name="serverinfo", pass_context=True)
+    @commands.has_role('Staff')
     async def server_info(self, ctx):
         """Gets information about the current server"""
         await self.client.say("```xl\n"
@@ -179,7 +181,6 @@ class Moderations:
 
 
     @commands.command(pass_context=True)
-    @commands.has_role('Staff')
     async def avatar(self, ctx, user: discord.Member):
         """Gets the users avatar you provided in the string."""
         embed = discord.Embed(title="Here's {}s avatar :".format(user.name), color=0xF35353)
@@ -189,6 +190,7 @@ class Moderations:
 
 
     @commands.command(pass_context = True)
+    @commands.has_role('Staff')
     async def id(self, ctx, user: discord.Member):
         """Gets their id."""
         embed = discord.Embed(name="Users ID!", description=" ", color=0xff00f6)
@@ -215,6 +217,8 @@ class Moderations:
 
 
     @commands.command(pass_context = True)
+    @commands.has_permissions(ban_members=True)
+    @commands.has_role('Staff')
     async def unban(self, ctx, user_id):
         """Unbans the nice and beautiful kids."""
         banned = await self.client.get_user_info(user_id)
