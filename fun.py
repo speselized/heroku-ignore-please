@@ -26,6 +26,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def banne(self, ctx, member : discord.Member):
+        """Fake bans the user you provided in the string"""
             await client.delete_message(ctx.message)
             await client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
 
@@ -33,6 +34,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def bam(self, ctx, member : discord.Member):
+        """Fake bans so the bot says you got banned even tho you didn't"""
             await self.client.delete_message(ctx.message)
             await self.client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
 
@@ -41,13 +43,16 @@ class Fun:
         
     @commands.command(name="8ball")
     async def _ball(self, ctx):
-        await self.client.say(random.choice(["It is certain"," It is decidedly so","Without a doubt","Yes, definitely","You may rely on it","As I see it, yes"," Most likely","Outlook good","Yes","Signs point to yes"," Reply hazy try again","Ask again later","Better not tell you now","Cannot predict now","Concentrate and ask again","Don't count on it","My reply is no","My sources say no","Outlook not so good","Very doubtful"]))
-        await self.client.add_reaction("🎱")
+        """Magic 8ball. SPOOKY"""
+        message = await self.client.say(random.choice(["It is certain"," It is decidedly so","Without a doubt","Yes, definitely","You may rely on it","As I see it, yes"," Most likely","Outlook good","Yes","Signs point to yes"," Reply hazy try again","Ask again later","Better not tell you now","Cannot predict now","Concentrate and ask again","Don't count on it","My reply is no","My sources say no","Outlook not so good","Very doubtful"]))
+        emote = get(client.get_all_emojis(),name='8ball')
+        await self.client.add_reaction(message, emote)
 
 
 
     @commands.command(pass_context=True)
     async def slap(self, ctx, member : discord.Member):
+        """Slaps the user you provided in the string!"""
         author = ctx.message.author
         if member.id == ctx.message.author.id:
             await self.client.say(ctx.message.author.mention + ", you cannot slap yourself.")
@@ -57,16 +62,6 @@ class Fun:
 
 
 
-
-    @commands.command(pass_context=True)
-    async def poke(self, ctx):
-            await self.client.delete_message(ctx.message)
-            await self.client.say(random.choice(['STOP TOUCHING ME!', 'LEAVE ME ALONE', 'can I go home now?',
-                   'It\'s dark in here..', 'AAAAAAAAAAAAH', 'NO', '*giggles*',
-                   '*moans*', ';)', ':(', 'h-hello?', '*pokes back*', 'D: not there!',
-                   'A bit lower...', 'WHAT DO YOU WANT?!', 'bleep', 'Well hello there ;)',
-                   '*blush* not now! everybody is watching..', '*falls over*', '*winks*',
-                   'N-nani']))
             
             
     @commands.command(pass_context=True, aliases=['d'])
@@ -92,6 +87,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def spank(self, ctx, member : discord.Member):
+        """Naughty Naughty"""
         author = ctx.message.author
         if member.id == ctx.message.author.id:
             await self.client.say(ctx.message.author.mention + ", Oh I mean don\'t spank yourself that\'s just wrong bro I am not getting a belt and whooping your ass sorry.")
@@ -104,6 +100,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def hug(self, ctx, member : discord.Member):
+        """HUGGY HUGGY"""
         author = ctx.message.author
         if member.id == ctx.message.author.id:
             await self.client.say(ctx.message.author.mention + ", You\'re that lonely? Wow well anyway I give {} a big hug! :hugging: ".format(author))
@@ -117,6 +114,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def fight(self, ctx):
+        """Fight that stupid cunt you wanna smash his skull in."""
         message = ctx.message
         args = message.content.split()
         if "Staff" in [role.name for role in message.author.roles]:
@@ -144,17 +142,8 @@ class Fun:
 
 
     @commands.command(pass_context=True)
-    async def search(self, ctx):
-            """Poke DiscoBot, yay!"""
-            await self.client.delete_message(ctx.message)
-            await self.client.say(random.choice(['You found money you use that money for hookers. You have sex with one and then a couple weeks later you go the doctors because you\'re sick the doctor says you have AIDS. Congrats you\'ve yourself', 'You are at a supermarket you see a $100 Dollar Bill just on the floor waiting there you continue to pick it up the person who dropped it is right next to it and then he realises you\'re grabbing his note so he punches the fuck out of you! YOU GOT KNOCKED THE FUCK OUT' ,'*Searches through dumpster for toilet paper!*','You were driving to your neighbourhood wendy\'s but then you see a big fucking giraffe you kidnap the girrafe hoping you would get money out of it all you got was the police at your door.', 'You were very bored and you had acess to internet you were very horny so you searched up porn you click on the video you see yourself jerking off. Don\'t post videos of yourself jerking off fucking dumbass queer go suck a dick',
-            'You found $510 dollars under your bed congrats you fucking faggot. Guess what your virginity is taken by a fat ass girl who looks like a burger but anyway she has aids. Fuck you cunt.',
-                       'You found a dildo in your mum\'s purse. ***Your mum a hoe***', 'You check in the couches and you found a iphone 6s You check whats on it and on the background is yourself. ***BOO***', 'Stop checking through your mums shit for fuck sakes anyway you found her debit card so you bought v bucks on this toxic community called fortnite yeah I know bad idea.', 'You went into the fridge and you found a dead body! *Congrats!*',
-                       'You found a gun what do you do with the gun? You shoot yourself in the head because you\'re a toxic suicidal faggot', 'You found a knife. You kill all of your friends and family. Congrats you\'re now a serial killer!', 'Damn you horny fuck stop going through your aunt\'s shit damn anyway you found lip stick you put lip stick all over you, you go on instagram and catfish', 'You go to mcdonalds drinking a coke because you\'re a fat fuck anyway besides that you check if you won anything and you did. *You won a car!* You drive the car and then you forgot to brake and you fly off the fucking cliff because you\'re a dumb fat fuck who doesn\'t know how to drive', 'You find a xbox one just sitting next to EB GAMES and you decided to pick it up bring it home it worked you remember you had GTA 5 so you\'re playing that you\'re driving and then you realised your seatbelt isn\'t on so you go 201 KM/H and then fucking fly like a plane and then you realise it\'s real life']))
-
-
-    @commands.command(pass_context=True)
     async def reverse(self, ctx, *, message):
+        """REVERSE MORE LIKE ESREVER"""
         if 'enoyreve@' in message:
             await self.client.say("Haha nice try but u r gay.")
             await self.client.delete_message(ctx.message)
@@ -171,38 +160,19 @@ class Fun:
         else:
             await self.client.say("{}".format(message)[::-1])
 
-    @commands.command(pass_context=True)
-    async def love(self, ctx, member : discord.Member):
-        author = ctx.message.author
-        if member.id == ctx.message.author.id:
-            await self.client.say(ctx.message.author.mention + ", Awww You are lonely. I will give you a hug do not worry <3 @Rainy Nights#9283 gave {0} big love! :kissing_heart: :heart: :heart_eyes: ".format(author))
-            return
-        else:
-            await self.client.say('{0} gives big huge large love to a fantastic person called {1}, Love you lots <3 :heart: :heart_eyes: '.format(author, member))
 
-
-
-
-
-
-    @commands.command(pass_context=True)
-    async def hug(self, ctx, member : discord.Member):
-        author = ctx.message.author
-        if member.id == ctx.message.author.id:
-            await self.client.say(ctx.message.author.mention + ", You\'re that lonely? Wow well anyway I give {} a big hug! :hugging: ".format(author))
-            return
-        else:
-            await self.client.say(random.choice(['*{0} Hugs {1}*', '*{0} Licks {1}*', '*{0} Pounces {1}*', '*{0} Jumps on {1}*', '*{0} Wrestles {1}*', '*{0} Falls on {1}*']).format(author, member))
 
 
 
     @commands.command(pass_context=True)
     async def lapdance(self, ctx, member : discord.Member):
+        """OOoooooooOooOooOHH"""
             await self.client.delete_message(ctx.message)
             await self.client.say('***Gives {} a sexy beautiful hot sweating pulsing lesbian gay porn lapdance!***'.format(member))
 
     @commands.command(pass_context=True)
     async def ping(self, ctx):
+        """PONG"""
         resp = await self.client.say('Pong! Loading...')
         diff = resp.timestamp - ctx.message.timestamp
         await self.client.edit_message(resp, f'Pong! That took {1000*diff.total_seconds():.1f}ms.')
@@ -211,6 +181,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def gay(self, ctx, user: discord.Member):
+        """My sir you have 900% gayness"""
         rnd = random.randint(1, 100)
         emb = discord.Embed(title="{} is {}% gay!".format(user.name, rnd), color=0xffffff)
         emb.set_footer(text="Command runned by {}".format(ctx.message.author.name))
@@ -218,6 +189,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def pp(self, ctx, user: discord.Member):
+        """you got small pp lmao like logan paul and jake paul ew"""
         rnd = random.randint(1, 100)
         emb = discord.Embed(title="{} has {} inch pp!".format(user.name, rnd), color=0xffffff)
         emb.set_footer(text="Command runned by {}".format(ctx.message.author.name))
@@ -225,6 +197,7 @@ class Fun:
 
     @commands.command(pass_context=True)
     async def pong(self, ctx):
+        """STOP"""
         msg = await self.client.say('Hey, stop that.')
         await asyncio.sleep(5)
         await self.client.delete_message(msg)
@@ -245,6 +218,7 @@ class Fun:
     @commands.command(pass_context=True)
     @commands.has_permissions(ban_members=True)
     async def spam(self, ctx, user: discord.Member, amount: int, *, content):
+        """SPAM THAT NIGGA"""
         if amount > 20:
             await self.client.say("Can't spam over 20.")
             return
@@ -261,7 +235,7 @@ class Fun:
             messages = messages + 1
             await asyncio.sleep(0.2)
 
-        # example of command is '!spam @user 10 wake up'
+        # example of command is '?spam @user 10 wake up'
         # this will make the bot ping the user 10 times and say wake up.
 
     @spam.error
@@ -272,17 +246,10 @@ class Fun:
             await self.client.delete_message(ctx.message)
 
         elif isinstance(error, discord.ext.commands.MissingRequiredArgument):
-            await self.client.say('Missing Required Argument. ```!spam @user 10 wake up```')
+            await self.client.say('Missing Required Argument. ```?spam @user 10 wake up```')
             await self.client.delete_message(ctx.message)
 
 
-
-
-    @commands.command(pass_context=True)
-    @commands.has_role('Lord')
-    async def faggots(self, ctx):
-        await self.client.delete_message(ctx.message)
-        await self.client.say(" YOU'RE ALL FAGGOTS JAJAJAJAJAJAJA :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: COME TO BRAZIL JAJAJJAJAJ :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: :flag_br: ")
 
 
     @commands.command(pass_context=True)
