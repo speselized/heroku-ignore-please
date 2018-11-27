@@ -47,7 +47,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def permit(self, ctx, user: discord.Member):
-        """Gives the user you provided in the string the permissions to add links / images or media.""" 
+        """Gives the user you provided in the string the permissions to add links / images or media. (STAFF ONLY)""" 
         role = discord.utils.get(user.server.roles, name="Image Perms")
         await self.client.delete_message(ctx.message)
         await self.client.add_roles(user, role)
@@ -58,7 +58,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def approve(self, ctx, user: discord.Member):
-        """Gives the user you provided in the string the permissions to add links / images or media.""" 
+        """Gives the user you provided in the string the permissions to add links / images or media. (STAFF ONLY)""" 
         role = discord.utils.get(user.server.roles, name="Image Perms")
         await self.client.delete_message(ctx.message)
         await self.client.add_roles(user, role)
@@ -68,7 +68,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def perm(self, ctx, user: discord.Member):
-        """Gives the user you provided in the string the permissions to add links / images or media.""" 
+        """Gives the user you provided in the string the permissions to add links / images or media. (STAFF ONLY)""" 
         role = discord.utils.get(user.server.roles, name="Image Perms")
         await self.client.delete_message(ctx.message)
         await self.client.add_roles(user, role)
@@ -79,7 +79,7 @@ class Moderations:
     @commands.command(name="whois", pass_context=True)
     @commands.has_role('Staff')
     async def user_info(self, ctx, user: discord.Member = None):
-        """Gets information about the desired user (defaults to the message sender)"""
+        """Gets information about the desired user (defaults to the message sender) (STAFF ONLY)"""
         if user is None:
             await self.client.say("```xl\n"
                                "User: {0}\n"
@@ -125,7 +125,7 @@ class Moderations:
 
 
     async def bans(self, ctx):
-        """Shows how many bans are in the server."""
+        """Shows how many bans are in the server. (STAFF ONLY)"""
         ban_list = await self.client.get_bans(ctx.message.server)
 
         # Show banned users
@@ -163,7 +163,7 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_role('Staff')
     async def dm(self, ctx, member: discord.Member,*, message = ""):
-        """Direct messages the user you pinged."""
+        """Direct messages the user you pinged. (STAFF ONLY)"""
         
         await self.client.send_message(member, '{}'.format(message))
         await self.client.say('***Message sent!***')
@@ -173,7 +173,7 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_role('Staff')
     async def message(self, ctx, member: discord.Member,*, message = ""):
-        """The bot direct messages the user you provided in the string."""
+        """The bot direct messages the user you provided in the string. (STAFF ONLY)"""
         await self.client.send_message(member, '{}'.format(message))
         await self.client.say('***Message sent!***')
         await self.client.delete_message(ctx.message)
@@ -182,7 +182,7 @@ class Moderations:
 
     @commands.command(pass_context=True)
     async def avatar(self, ctx, user: discord.Member):
-        """Gets the users avatar you provided in the string."""
+        """Gets the users avatar you provided in the string. (STAFF ONLY)"""
         embed = discord.Embed(title="Here's {}s avatar :".format(user.name), color=0xF35353)
         embed.set_image(url=user.avatar_url)
         await self.client.delete_message(ctx.message)
@@ -192,7 +192,7 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_role('Staff')
     async def id(self, ctx, user: discord.Member):
-        """Gets their id."""
+        """Gets their id. (STAFF ONLY)"""
         embed = discord.Embed(name="Users ID!", description=" ", color=0xff00f6)
         embed.set_author(name="{}'s ID.".format(user.name))
         embed.add_field(name="There :slight_smile: ", value=user.id, inline=True)
@@ -204,7 +204,7 @@ class Moderations:
     @commands.has_permissions(ban_members=True)
     @commands.has_role('Staff')
     async def ban(self, ctx, user: discord.Member = None):
-        """BAN THE NAUGHTY KIDS."""
+        """BAN THE NAUGHTY KIDS. (STAFF ONLY)"""
         if user is None:
             await self.client.say('Please provied a user to ban!')
         else:
@@ -220,27 +220,31 @@ class Moderations:
     @commands.has_permissions(ban_members=True)
     @commands.has_role('Staff')
     async def unban(self, ctx, user_id):
-        """Unbans the nice and beautiful kids."""
+        """Unbans the nice and beautiful kids. (STAFF ONLY)"""
         banned = await self.client.get_user_info(user_id)
         embed=discord.Embed(title="User Unbanned!", description="**{0}** was unbanned by **{1}**!".format(banned, ctx.message.author), color=0xff00f6)
         await self.client.unban(ctx.message.server, banned)
         await self.client.say(embed=embed)
 
 
-    @commands.command(name='kick', description="kicks people", brief="Kicks people.", aliases=['kick that guy\'s booty','delete'], pass_context=True)
+    @commands.command(pass_context=True)
     @commands.has_role('Staff')
-    async def kick(self, ctx, user:discord.Member, *, reason:str=None):
+    async def kick(self, ctx, user:discord.Member, reason):
         """Kicks someone from the server (STAFF ONLY)"""
-        if reason is None:
-            reason = "You have been kicked by {ctx.message.author}. No reason was given."
-        else:
-            reason = "You have been kicked by {ctx.message.author}. Reason:" + reason
-
-        try:
-            await self.client.kick(user)
-        except discord.errors.Forbidden:
-                await self.client.say("Permission denied. Check if you and I have sufficent permission to kick users.")
-                return
+        msg = ctx.message.content.split(" ")
+        msg2 = " ".join(msg[2:])
+        await self.client.kick(user)
+        await self.client.send_message(user, f"You have been kicked in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
+        await self.client.say(f"{user.name} has been kicked Reason: {msg2}")
+        if ctx.message.server.id == "511148640710950933":
+            channel = self.client.get_channel("502068770039136257")
+            embed = discord.Embed(title="Warn", color=discord.Color.red())
+            embed.add_field(name="User", value=user.mention)
+            embed.add_field(name="Moderator", value=ctx.message.author.mention)
+            embed.add_field(name="Reason", value=reason)
+            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            embed.set_thumbnail(url=user.avatar_url)
+            await self.client.send_message(channel, embed=embed)
 
 
 
@@ -278,17 +282,17 @@ class Moderations:
         if ctx.message.server.id == "511148640710950933":
             role = discord.utils.get(ctx.message.server.roles, name="Muted")
             await self.client.add_roles(member, role)
+            await self.client.say(f"{user.name} has been Muted Reason: {reason} For {time}s")
+            await self.client.send_message(user, f"You have been Muted in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{reason}** For {time}s.")
             bembed = discord.Embed(title="User Muted.", color=16202876)
-            bembed.add_field(name="Muted user:", value=str(member), inline=False)
-            bembed.add_field(name="Reason:", value=str(reason), inline=False)
+            bembed.add_field(name="User:", value=str(member), inline=False)
             bembed.add_field(name="Moderator:", value=str(ctx.message.author), inline=False)
-            if time:
-                bembed.add_field(name="Lasts for:", value=str(time), inline=False)
-                bchannel = discord.Object('511832933829443594')
-                await self.client.send_message(bchannel, embed=bembed)
-            else:
-                bchannel = discord.Object('511832933829443594')
-                await self.client.send_message(bchannel, embed=bembed)
+            bembed.add_field(name="Reason:", value=str(reason), inline=False)
+            bembed.add_field(name="Lasts for:", value=str(time), inline=False)
+            bembed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            bembed.set_thumbnail(url=user.avatar_url)
+            bchannel = discord.Object('511832933829443594')
+            await self.client.send_message(bchannel, embed=bembed)
             if time:
                 await asyncio.sleep(time)
                 await self.client.remove_roles(member, role)
