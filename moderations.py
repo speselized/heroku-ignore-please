@@ -203,14 +203,21 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_permissions(ban_members=True)
     @commands.has_role('Staff')
-    async def ban(self, ctx, user: discord.Member = None):
+    async def ban(self, ctx, user: discord.Member, reason):
         """BAN THE NAUGHTY KIDS. (STAFF ONLY)"""
-        if user is None:
-            await self.client.say('Please provied a user to ban!')
-        else:
-            embed=discord.Embed(title="User Banned!", description="**{0}** was banned by **{1}**!".format(user, ctx.message.author), color=0xff00f6)
-            await self.client.say(embed=embed)
-            await self.client.ban(user)
+        msg = ctx.message.content.split(" ")
+        msg2 = " ".join(msg[2:])
+        await self.client.ban(user)
+        await self.client.send_message(user, f"You have been banned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
+        await self.client.say(f"{user.name} has been banned Reason: {msg2}")
+        if ctx.message.server.id == "511148640710950933":
+            channel = self.client.get_channel("502068770039136257")
+            embed = discord.Embed(title="Ban", color=discord.Color.red())
+            embed.add_field(name="User", value=user.mention)
+            embed.add_field(name="Moderator", value=ctx.message.author.mention)
+            embed.add_field(name="Reason", value=reason)
+            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            await self.client.send_message(channel, embed=embed)
 
 
 
@@ -219,12 +226,22 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_permissions(ban_members=True)
     @commands.has_role('Staff')
-    async def unban(self, ctx, user_id):
+    async def unban(self, ctx, user_id, reason):
         """Unbans the nice and beautiful kids. (STAFF ONLY)"""
         banned = await self.client.get_user_info(user_id)
-        embed=discord.Embed(title="User Unbanned!", description="**{0}** was unbanned by **{1}**!".format(banned, ctx.message.author), color=0xff00f6)
+        msg = ctx.message.content.split(" ")
+        msg2 = " ".join(msg[2:])
         await self.client.unban(ctx.message.server, banned)
-        await self.client.say(embed=embed)
+        await self.client.send_message(user, f"You have been unbanned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
+        await self.client.say(f"{user.name} has been unbanned Reason: {msg2}")
+        if ctx.message.server.id == "511148640710950933":
+            channel = self.client.get_channel("502068770039136257")
+            embed = discord.Embed(title="Unban", color=discord.Color.red())
+            embed.add_field(name="User", value=user.mention)
+            embed.add_field(name="Moderator", value=ctx.message.author.mention)
+            embed.add_field(name="Reason", value=reason)
+            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
+            await self.client.send_message(channel, embed=embed)
 
 
     @commands.command(pass_context=True)
@@ -238,7 +255,7 @@ class Moderations:
         await self.client.say(f"{user.name} has been kicked Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933":
             channel = self.client.get_channel("502068770039136257")
-            embed = discord.Embed(title="Warn", color=discord.Color.red())
+            embed = discord.Embed(title="Kick", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
             embed.add_field(name="Reason", value=reason)
