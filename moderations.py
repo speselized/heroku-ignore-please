@@ -103,7 +103,7 @@ class Moderations:
     async def server_info(self, ctx):
         """Gets information about the current server"""
         await self.client.say("```xl\n"
-                           "Guild: {0}\n"
+                           "Server: {0}\n"
                            "ID: {0.id}\n"
                            "Region: {0.region}\n"
                            "Member Count: {1}\n"
@@ -120,6 +120,7 @@ class Moderations:
 
 
     async def bans(self, ctx):
+        """Shows how many bans are in the server."""
         ban_list = await self.client.get_bans(ctx.message.server)
 
         # Show banned users
@@ -139,6 +140,7 @@ class Moderations:
 
     @commands.command(pass_context=True)
     async def invite(self, ctx):
+        """Makes an invite for the server. Max uses is 100."""
             invitelinknew = await self.client.create_invite(destination = ctx.message.channel, xkcd = True, max_uses = 100)
             embedMsg=discord.Embed(color=0xf41af4)
             embedMsg.add_field(name="Discord Invite Link", value=invitelinknew)
@@ -156,6 +158,8 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_role('Staff')
     async def dm(self, ctx, member: discord.Member,*, message = ""):
+        """Direct messages the user you pinged."""
+        
         await self.client.send_message(member, '{}'.format(message))
         await self.client.say('***Message sent!***')
         await self.client.delete_message(ctx.message)
@@ -164,6 +168,7 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_role('Staff')
     async def message(self, ctx, member: discord.Member,*, message = ""):
+        """The bot direct messages the user you provided in the string."""
         await self.client.send_message(member, '{}'.format(message))
         await self.client.say('***Message sent!***')
         await self.client.delete_message(ctx.message)
@@ -173,6 +178,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def avatar(self, ctx, user: discord.Member):
+        """Gets the users avatar you provided in the string."""
         embed = discord.Embed(title="Here's {}s avatar :".format(user.name), color=0xF35353)
         embed.set_image(url=user.avatar_url)
         await self.client.delete_message(ctx.message)
@@ -181,6 +187,7 @@ class Moderations:
 
     @commands.command(pass_context = True)
     async def id(self, ctx, user: discord.Member):
+        """Gets their id."""
        embed = discord.Embed(name="Users ID!", description=" ", color=0xff00f6)
        embed.set_author(name="{}'s ID.".format(user.name))
        embed.add_field(name="There :slight_smile: ", value=user.id, inline=True)
@@ -192,6 +199,7 @@ class Moderations:
     @commands.has_permissions(ban_members=True)
     @commands.has_role('Staff')
     async def ban(self, ctx, user: discord.Member = None):
+        """BAN THE NAUGHTY KIDS."""
         if user is None:
             await self.client.say('Please provied a user to ban!')
         else:
@@ -205,6 +213,7 @@ class Moderations:
 
     @commands.command(pass_context = True)
     async def unban(self, ctx, user_id):
+        """Unbans the nice and beautiful kids."""
         banned = await self.client.get_user_info(user_id)
         embed=discord.Embed(title="User Unbanned!", description="**{0}** was unbanned by **{1}**!".format(banned, ctx.message.author), color=0xff00f6)
         await self.client.unban(ctx.message.server, banned)
@@ -212,12 +221,13 @@ class Moderations:
 
 
     @commands.command(name='kick', description="kicks people", brief="Kicks people.", aliases=['kick that guy\'s booty','delete'], pass_context=True)
+    @commands.has_role('Staff')
     async def kick(self, ctx, user:discord.Member, *, reason:str=None):
-        """Kicks someone from the server"""
+        """Kicks someone from the server (STAFF ONLY)"""
         if reason is None:
-            reason = "You have been banned by {ctx.message.author}. No reason was given."
+            reason = "You have been kicked by {ctx.message.author}. No reason was given."
         else:
-            reason = "You have been banned by {ctx.message.author}. Reason:" + reason
+            reason = "You have been kicked by {ctx.message.author}. Reason:" + reason
 
         try:
             await self.client.kick(user)
@@ -231,6 +241,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def warn(self, ctx, user: discord.User, reason):
+        """Warns the user. (STAFF ONLY)"""
         msg = ctx.message.content.split(" ")
         msg2 = " ".join(msg[2:])
         await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
@@ -256,6 +267,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def mute(self, ctx, member:discord.Member, time:TimeConverter = None, *, reason:str):
+        """Mutes the user. Requires time and reason! (STAFF ONLY)"""
         if ctx.message.server.id == "511148640710950933":
             role = discord.utils.get(ctx.message.server.roles, name="Muted")
             await self.client.add_roles(member, role)
@@ -280,6 +292,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def unmute(self, ctx, user: discord.User, reason):
+        """Unmutes the naughty bad child. (STAFF ONLY)"""
         if ctx.message.server.id == "511148640710950933":
             msg = ctx.message.content.split(" ")
             msg2 = " ".join(msg[2:])
@@ -305,6 +318,20 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_role('Staff')
     async def echo(self, ctx, *, mg = None):
+        """Bot repeats what you say. (STAFF ONLY)"""
+        await self.client.delete_message(ctx.message)
+
+        if not mg: await self.client.say("Please specify a message to send")
+        else: await self.client.say(mg)
+            
+            
+            
+            
+            
+    @commands.command(pass_context = True)
+    @commands.has_role('Staff')
+    async def say(self, ctx, *, mg = None):
+        """Bot repeats what you say. MAGICAL (STAFF ONLY)"""
         await self.client.delete_message(ctx.message)
 
         if not mg: await self.client.say("Please specify a message to send")
