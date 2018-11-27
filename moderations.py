@@ -329,7 +329,7 @@ class Moderations:
             embed = discord.Embed(title="Unmute", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
-            embed.add_field(name="Reason", value=reason)
+            embed.add_field(name="Reason", value=msg2)
             embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
             role = discord.utils.get(ctx.message.server.roles, id="511801831064731648")
