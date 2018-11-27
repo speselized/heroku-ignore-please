@@ -27,16 +27,16 @@ class Fun:
     @commands.command(pass_context=True)
     async def banne(self, ctx, member : discord.Member):
         """Fake bans the user you provided in the string"""
-            await client.delete_message(ctx.message)
-            await client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
+        await client.delete_message(ctx.message)
+        await client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
 
 
 
     @commands.command(pass_context=True)
     async def bam(self, ctx, member : discord.Member):
         """Fake bans so the bot says you got banned even tho you didn't"""
-            await self.client.delete_message(ctx.message)
-            await self.client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
+        await self.client.delete_message(ctx.message)
+        await self.client.say("***<:greentick:503040447741165569> {0} has been banned!***".format(member))
 
 
         
