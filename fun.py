@@ -275,20 +275,6 @@ class Fun:
             await self.client.say('Missing Required Argument. ```!spam @user 10 wake up```')
             await self.client.delete_message(ctx.message)
 
-    @commands.command(pass_context=True)
-    async def say(self, ctx, *, message):
-        if '@everyone' in message: # Checking to make sure the user isn't trying to ping everyone or here
-            await self.client.say('Nice try.')
-            await self.client.delete_message(ctx.message)
-            return
-        elif '@here' in message:
-            await self.client.say('Nice try.')
-            await self.client.delete_message(ctx.message)
-            return
-        else:
-            await self.client.send_message(ctx.message.channel, message)
-            await self.client.delete_message(ctx.message)
-
 
 
 
