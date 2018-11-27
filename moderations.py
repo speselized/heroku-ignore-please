@@ -315,27 +315,40 @@ class Moderations:
             channel = self.client.get_channel("511832933829443594")
             await self.client.send_message(channel, embed=embed)
 
-    @commands.command(pass_context = True)
+    @commands.command(pass_context=True)
     @commands.has_role('Staff')
-    async def echo(self, ctx, *, mg = None):
-        """Bot repeats what you say. (STAFF ONLY)"""
-        await self.client.delete_message(ctx.message)
-
-        if not mg: await self.client.say("Please specify a message to send")
-        else: await self.client.say(mg)
+    async def say(self, ctx, *, message):
+        """Makes the bot say something magical (STAFF ONLY)"""
+        if '@everyone' in message: # Checking to make sure the user isn't trying to ping everyone or here
+            await self.client.say('Nice try.')
+            await self.client.delete_message(ctx.message)
+            return
+        elif '@here' in message:
+            await self.client.say('Nice try.')
+            await self.client.delete_message(ctx.message)
+            return
+        else:
+            await self.client.send_message(ctx.message.channel, message)
+            await self.client.delete_message(ctx.message)
             
             
             
             
-            
-    @commands.command(pass_context = True)
+    @commands.command(pass_context=True)
     @commands.has_role('Staff')
-    async def say(self, ctx, *, mg = None):
-        """Bot repeats what you say. MAGICAL (STAFF ONLY)"""
-        await self.client.delete_message(ctx.message)
-
-        if not mg: await self.client.say("Please specify a message to send")
-        else: await self.client.say(mg)
+    async def echo(self, ctx, *, message):
+        """Makes the bot say something magical (STAFF ONLY)"""
+        if '@everyone' in message: # Checking to make sure the user isn't trying to ping everyone or here
+            await self.client.say('Nice try.')
+            await self.client.delete_message(ctx.message)
+            return
+        elif '@here' in message:
+            await self.client.say('Nice try.')
+            await self.client.delete_message(ctx.message)
+            return
+        else:
+            await self.client.send_message(ctx.message.channel, message)
+            await self.client.delete_message(ctx.message)
 
 
 
