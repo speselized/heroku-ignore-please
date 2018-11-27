@@ -17,7 +17,6 @@ from discord import opus
 from discord.ext import commands
 from discord.utils import get
 
-class Bot Owner:
 
 TOKEN = 'NDkwNDQ3NTUzMjIyMTQ4MDk3.Dn6o0g.I87hdy0DJps4vOcFuo34GmFNTt0'
 client = commands.Bot(command_prefix = '?')
@@ -51,6 +50,7 @@ async def on_member_join(member):
 
 @client.command()
 async def load(extension):
+    """Loads the cog you provided. (BOT OWNER ONLY)"""
     try:
         client.load_extension(extension)
         print('Loaded {}'.format(extension))
@@ -59,6 +59,7 @@ async def load(extension):
 
 @client.command()
 async def unload(extension):
+    """Loads the cog you provided. (BOT OWNER ONLY)"""
     try:
         client.unload_extension(extension)
         print('Unloaded {}'.format(extension))
