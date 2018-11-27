@@ -17,6 +17,8 @@ from discord import opus
 from discord.ext import commands
 from discord.utils import get
 
+class Bot Owner:
+
 TOKEN = 'NDkwNDQ3NTUzMjIyMTQ4MDk3.Dn6o0g.I87hdy0DJps4vOcFuo34GmFNTt0'
 client = commands.Bot(command_prefix = '?')
 
