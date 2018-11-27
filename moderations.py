@@ -226,20 +226,19 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_permissions(ban_members=True)
     @commands.has_role('Staff')
-    async def unban(self, ctx, user:discord.Member, user_id, reason):
+    async def unban(self, ctx, user_id, reason):
         """Unbans the nice and beautiful kids. (STAFF ONLY)"""
         banned = await self.client.get_user_info(user_id)
         msg = ctx.message.content.split(" ")
         msg2 = " ".join(msg[2:])
         await self.client.unban(ctx.message.server, banned)
-        await self.client.say(f"{user.name} or {user.id} has been unbanned Reason: {msg2}")
+        await self.client.say(f"{user.id} has been unbanned Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933":
             channel = self.client.get_channel("511832933829443594")
             embed = discord.Embed(title="Unban", color=discord.Color.red())
-            embed.add_field(name="User", value=user.name)
+            embed.add_field(name="User ID", value=user.id)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
             embed.add_field(name="Reason", value=reason)
-            embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
             await self.client.send_message(channel, embed=embed)
 
 
