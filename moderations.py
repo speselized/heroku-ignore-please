@@ -226,7 +226,7 @@ class Moderations:
     @commands.command(pass_context = True)
     @commands.has_permissions(ban_members=True)
     @commands.has_role('Staff')
-    async def unban(self, ctx, user_id, reason):
+    async def unban(self, ctx, user:discord.Member, user_id, reason):
         """Unbans the nice and beautiful kids. (STAFF ONLY)"""
         banned = await self.client.get_user_info(user_id)
         msg = ctx.message.content.split(" ")
