@@ -211,7 +211,7 @@ class Moderations:
         await self.client.send_message(user, f"You have been banned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been banned Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933":
-            channel = self.client.get_channel("502068770039136257")
+            channel = self.client.get_channel("511832933829443594")
             embed = discord.Embed(title="Ban", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
@@ -235,7 +235,7 @@ class Moderations:
         await self.client.send_message(user, f"You have been unbanned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been unbanned Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933":
-            channel = self.client.get_channel("502068770039136257")
+            channel = self.client.get_channel("511832933829443594")
             embed = discord.Embed(title="Unban", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
@@ -254,7 +254,7 @@ class Moderations:
         await self.client.send_message(user, f"You have been kicked in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been kicked Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933":
-            channel = self.client.get_channel("502068770039136257")
+            channel = self.client.get_channel("511832933829443594")
             embed = discord.Embed(title="Kick", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
@@ -275,7 +275,7 @@ class Moderations:
         await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been warned Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933":
-            channel = self.client.get_channel("502068770039136257")
+            channel = self.client.get_channel("511832933829443594")
             embed = discord.Embed(title="Warn", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
