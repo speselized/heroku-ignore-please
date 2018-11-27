@@ -47,6 +47,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def permit(self, ctx, user: discord.Member):
+        """Gives the user you provided in the string the permissions to add links / images or media.""" 
         role = discord.utils.get(user.server.roles, name="Image Perms")
         await self.client.delete_message(ctx.message)
         await self.client.add_roles(user, role)
@@ -57,6 +58,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def approve(self, ctx, user: discord.Member):
+        """Gives the user you provided in the string the permissions to add links / images or media.""" 
         role = discord.utils.get(user.server.roles, name="Image Perms")
         await self.client.delete_message(ctx.message)
         await self.client.add_roles(user, role)
@@ -66,6 +68,7 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('Staff')
     async def perm(self, ctx, user: discord.Member):
+        """Gives the user you provided in the string the permissions to add links / images or media.""" 
         role = discord.utils.get(user.server.roles, name="Image Perms")
         await self.client.delete_message(ctx.message)
         await self.client.add_roles(user, role)
@@ -141,12 +144,12 @@ class Moderations:
     @commands.command(pass_context=True)
     async def invite(self, ctx):
         """Makes an invite for the server. Max uses is 100."""
-            invitelinknew = await self.client.create_invite(destination = ctx.message.channel, xkcd = True, max_uses = 100)
-            embedMsg=discord.Embed(color=0xf41af4)
-            embedMsg.add_field(name="Discord Invite Link", value=invitelinknew)
-            embedMsg.set_footer(text="Discord server invited link.")
-            await self.client.delete_message(ctx.message)
-            await self.client.send_message(ctx.message.channel, embed=embedMsg)
+        invitelinknew = await self.client.create_invite(destination = ctx.message.channel, xkcd = True, max_uses = 100)
+        embedMsg=discord.Embed(color=0xf41af4)
+        embedMsg.add_field(name="Discord Invite Link", value=invitelinknew)
+        embedMsg.set_footer(text="Discord server invited link.")
+        await self.client.delete_message(ctx.message)
+        await self.client.send_message(ctx.message.channel, embed=embedMsg)
 
 
     @commands.command(pass_context=True)
@@ -188,10 +191,10 @@ class Moderations:
     @commands.command(pass_context = True)
     async def id(self, ctx, user: discord.Member):
         """Gets their id."""
-       embed = discord.Embed(name="Users ID!", description=" ", color=0xff00f6)
-       embed.set_author(name="{}'s ID.".format(user.name))
-       embed.add_field(name="There :slight_smile: ", value=user.id, inline=True)
-       await self.client.say(embed=embed)
+        embed = discord.Embed(name="Users ID!", description=" ", color=0xff00f6)
+        embed.set_author(name="{}'s ID.".format(user.name))
+        embed.add_field(name="There :slight_smile: ", value=user.id, inline=True)
+        await self.client.say(embed=embed)
 
 
 
