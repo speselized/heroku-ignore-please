@@ -215,7 +215,7 @@ class Moderations:
             embed = discord.Embed(title="Ban", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
-            embed.add_field(name="Reason", value=reason)
+            embed.add_field(name="Reason", value=msg2)
             embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
             await self.client.send_message(channel, embed=embed)
 
@@ -237,7 +237,7 @@ class Moderations:
             channel = self.client.get_channel("511832933829443594")
             embed = discord.Embed(title="Unban", color=discord.Color.red())
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
-            embed.add_field(name="Reason", value=reason)
+            embed.add_field(name="Reason", value=msg2)
             await self.client.send_message(channel, embed=embed)
 
 
