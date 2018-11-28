@@ -44,8 +44,8 @@ async def on_member_join(member):
     role = discord.utils.get(member.server.roles, name = 'Members')
     channel = discord.utils.get(member.server.channels, name='welcome')
     await client.add_roles(member, role)
-    await client.send_message(channel, f"Hi {member.mention}! Please read the rules if you haven't.")
-    await client.send_message(member, f"{Hey {member.mention} We hope you have a great time at {member.server.name} Please read the rules and just be respectful.")
+    await client.send_message(channel, f"Hi {member.mention}. Please read the rules if you haven't.")
+    await client.send_message(member, f"Hey {member.mention}. We hope you have a great time at {member.server.name}")
                                        
                                        
 @client.event
