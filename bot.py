@@ -45,6 +45,14 @@ async def on_member_join(member):
     channel = discord.utils.get(member.server.channels, name='welcome')
     await client.add_roles(member, role)
     await client.send_message(channel, "Hi {0}! Please read the rules if you haven't.".format(member.mention))
+    await client.send_message(user, f"{Hey {member.mention} We hope you have a great time at {member.server.name} Please read the rules and just be respectful. thanks :)")
+                                       
+                                       
+@client.event
+async def on_member_remove(member):
+    channel = discord.utils.get(member.server.channels, name='welcome')
+    await client.send_message(channel, f"BEGONE THOT {member.mention} HAS BEEN BANISHED FROM {member.server.name}")
+    await client.send_message(user, f"Begone {member.mention} :( Anyway please considering joining back at {member.server.name}")
 
 
 
