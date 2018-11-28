@@ -232,11 +232,10 @@ class Moderations:
         msg = ctx.message.content.split(" ")
         msg2 = " ".join(msg[2:])
         await self.client.unban(ctx.message.server, banned)
-        await self.client.say(f"{user.id} has been unbanned Reason: {msg2}")
+        await self.client.say(f"user you have entered in the string has been unbanned Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933":
             channel = self.client.get_channel("511832933829443594")
             embed = discord.Embed(title="Unban", color=discord.Color.red())
-            embed.add_field(name="User ID", value=user.id)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
             embed.add_field(name="Reason", value=reason)
             await self.client.send_message(channel, embed=embed)
