@@ -51,8 +51,7 @@ async def on_member_join(member):
 @client.event
 async def on_member_remove(member):
     channel = discord.utils.get(member.server.channels, name='welcome')
-    await client.send_message(channel, f"BEGONE THOT {member.mention} HAS BEEN BANISHED FROM {member.server.name}")
-    await client.send_message(member, f"Begone {member.mention} :( Anyway please considering joining back at {member.server.name}")
+    await client.send_message(channel, f"BEGONE {member.mention} HAS BEEN BANISHED FROM {member.server.name}")
 
 
 
