@@ -50,7 +50,7 @@ class Moderations:
     async def nsfw(self, ctx, member : discord.Member):
         """When you execute this command you would be given access to nsfw content."""
         role = discord.utils.get(member.server.roles, name='NSFW')
-        await client.add_roles(member, role)
+        await self.client.add_roles(member, role)
         embed = discord.Embed(title="NSFW | Access Granted", color=discord.Color.red())
         embed.add_field(name="You have been given permissions to access NSFW content", value=member.mention)
         embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
@@ -61,7 +61,7 @@ class Moderations:
     async def nudity(self, ctx, member : discord.Member):
         """When you execute this command you would be given access to nsfw content."""
         role = discord.utils.get(member.server.roles, name='NSFW')
-        await client.add_roles(member, role)
+        await self.client.add_roles(member, role)
         embed = discord.Embed(title="NSFW | Access Granted", color=discord.Color.red())
         embed.add_field(name="You have been given permissions to access NSFW content", value=member.mention)
         embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
@@ -176,22 +176,22 @@ class Moderations:
         
     @commands.command(pass_context = True)
     @commands.has_permissions(manage_messages=True)
-    async def clear(self, ctx, amount=1000):
+    async def clear(self, ctx, amount=10):
         """Clear amount of messages you entered in the string"""
         channel = ctx.message.channel
         messages = []
-        async for message in client.logs_from(channel, limit-int(amount) + 1):
+        async for message in self.client.logs_from(channel, limit-int(amount) + 1):
             messages.append(message)
             await self.client.say('Messages deleted! :thumbsup:')
             
             
     @commands.command(pass_context = True)
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, ctx, amount=1000):
+    async def purge(self, ctx, amount=10):
         """Clear amount of messages you entered in the string"""
         channel = ctx.message.channel
         messages = []
-        async for message in client.logs_from(channel, limit-int(amount) + 1):
+        async for message in self.client.logs_from(channel, limit-int(amount) + 1):
             messages.append(message)
             await self.client.say('Messages deleted! :thumbsup:')
 
