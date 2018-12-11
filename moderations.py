@@ -180,7 +180,7 @@ class Moderations:
         """Clear amount of messages you entered in the string"""
         channel = ctx.message.channel
         messages = []
-        async for message in self.client.logs_from(channel, limit-int(amount) + 1):
+        async for message in self.client.logs_from(channel, limit=int(amount) + 1):
             messages.append(message)
             await self.client.say('Messages deleted! :thumbsup:')
             
@@ -191,7 +191,7 @@ class Moderations:
         """Clear amount of messages you entered in the string"""
         channel = ctx.message.channel
         messages = []
-        async for message in self.client.logs_from(channel, limit-int(amount) + 1):
+        async for message in self.client.logs_from(channel, limit=int(amount) + 1):
             messages.append(message)
             await self.client.say('Messages deleted! :thumbsup:')
 
