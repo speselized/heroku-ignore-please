@@ -227,7 +227,7 @@ class Moderations:
         await self.client.send_message(user, f"You have been banned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been banned Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933" or ctx.message.server.id == "516944111010578443":
-            channel = discord.utils.get(client.get_all_channels(), name='logs')
+            channel = discord.utils.get(self.client.get_all_channels(), name='logs')
             embed = discord.Embed(title="Ban", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
@@ -250,7 +250,7 @@ class Moderations:
         await self.client.unban(ctx.message.server, banned)
         await self.client.say(f"User Unbanned. Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933" or ctx.message.server.id == "516944111010578443":
-            channel = discord.utils.get(client.get_all_channels(), name='logs')
+            channel = discord.utils.get(self.client.get_all_channels(), name='logs')
             embed = discord.Embed(title="Unban", color=discord.Color.red())
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
             embed.add_field(name="Reason", value=msg2)
@@ -267,7 +267,7 @@ class Moderations:
         await self.client.send_message(user, f"You have been kicked in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been kicked Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933" or ctx.message.server.id == "516944111010578443":
-            channel = discord.utils.get(client.get_all_channels(), name='logs')
+            channel = discord.utils.get(self.client.get_all_channels(), name='logs')
             embed = discord.Embed(title="Kick", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
@@ -288,7 +288,7 @@ class Moderations:
         await self.client.send_message(user, f"You have been warned in **{ctx.message.server.name}** by **{ctx.message.author.name}**. Reason: **{msg2}**")
         await self.client.say(f"{user.name} has been warned Reason: {msg2}")
         if ctx.message.server.id == "511148640710950933" or ctx.message.server.id == "516944111010578443":
-            channel = discord.utils.get(client.get_all_channels(), name='logs')
+            channel = discord.utils.get(self.client.get_all_channels(), name='logs')
             embed = discord.Embed(title="Warn", color=discord.Color.red())
             embed.add_field(name="User", value=user.mention)
             embed.add_field(name="Moderator", value=ctx.message.author.mention)
@@ -321,7 +321,7 @@ class Moderations:
             bembed.add_field(name="Lasts for:", value=str(time), inline=False)
             bembed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
             bembed.set_thumbnail(url=member.avatar_url)
-            bchannel = discord.utils.get(client.get_all_channels(), name='logs')
+            bchannel = discord.utils.get(self.client.get_all_channels(), name='logs')
             await self.client.send_message(bchannel, embed=bembed)
             if time:
                 await asyncio.sleep(time)
@@ -352,7 +352,7 @@ class Moderations:
             overwrite.send_messages = False
             for channel in ctx.message.server.channels:
                 await self.client.edit_channel_permissions(channel, role, overwrite)
-            channel = discord.utils.get(client.get_all_channels(), name='logs')
+            channel = discord.utils.get(self.client.get_all_channels(), name='logs')
             await self.client.send_message(channel, embed=embed)
 
     @commands.command(pass_context=True)
