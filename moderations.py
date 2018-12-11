@@ -45,22 +45,20 @@ class Moderations:
         
         
 
-    @commands.command(pass_context=True)
-    @commands.has_role('The Queen')
-    async def reactrole(self, ctx):
-        channel = self.client.get_channel('521937059212951552')
-        role = discord.utils.get(user.server.roles, name="NSFW")
-        message = await self.client.send_message(channel, "React with the :thumbsup: to get access to NSFW content! <#521926119155302427>")
-        reaction, reactor = await self.client.wait_for_reaction(emoji="👍", message=message)
-        await self.client.add_roles(reactor, role)
+
+    @client.command(pass_context = True)
+    async def nsfw(ctx, member : discord.Member):
+        """When you execute this command you would be given access to nsfw content."""
+        role = discord.utils.get(member.server.roles, name='NSFW')
+        await client.add_roles(member, role)
     
-    
-    @commands.command(pass_context=True)
-    @commands.has_role('The Queen')
-    async def nsfw(self, ctx):
-        role = discord.utils.get(ctx.message.server.roles, name="NSFW")
-        await self.client.say('you has been permitted to access NSFW content! <#521926119155302427>')
-        await self.client.add_roles(member, role)
+    embed=discord.Embed(
+        title = "NSFW",
+        description = "**You have been given permission to access nsfw content.**",
+        colour = discord.Colour.blue()
+    )
+
+    await client.say(embed=embed)
 
 
         
@@ -169,22 +167,24 @@ class Moderations:
         
     @commands.command(pass_context = True)
     @commands.has_permissions(manage_messages=True)
-    async def clear(self, ctx, amount: int):
+    async def clear(self, ctx, amount=1000):
         """Clear amount of messages you entered in the string"""
-        deleted = await self.channel.purge(limit=amount)
-        embed=discord.Embed(color=0xffffff)
-        embed.add_field(name="✅ Success", value=f"Cleared {amount} Messages!", inline=False)
-        await self.client.say(embed=embed)
-        
-        
+        channel = ctx.message.channel
+        messages = []
+        async for message in client.logs_from(channel, limit-int(amount) + 1):
+            messages.append(message)
+            await self.client.say('Messages deleted! :thumbsup:')
+            
+            
     @commands.command(pass_context = True)
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, ctx, amount: int):
+    async def purge(self, ctx, amount=1000):
         """Clear amount of messages you entered in the string"""
-        deleted = await self.channel.purge(limit=amount)
-        embed=discord.Embed(color=0xffffff)
-        embed.add_field(name="✅ Success", value=f"Cleared {amount} Messages!", inline=False)
-        await self.client.say(embed=embed)
+        channel = ctx.message.channel
+        messages = []
+        async for message in client.logs_from(channel, limit-int(amount) + 1):
+            messages.append(message)
+            await self.client.say('Messages deleted! :thumbsup:')
 
 
     @commands.command(pass_context=True)
