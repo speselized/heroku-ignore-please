@@ -46,24 +46,24 @@ class Moderations:
         
 
 
-    @client.command(pass_context = True)
-    async def nsfw(ctx, member : discord.Member):
+    @commands.command(pass_context = True)
+    async def nsfw(self, ctx, member : discord.Member):
         """When you execute this command you would be given access to nsfw content."""
         role = discord.utils.get(member.server.roles, name='NSFW')
         await client.add_roles(member, role)
-        embed = discord.Embed(title="NSFW", color=discord.Color.red())
-        embed.add_field(name="Access Granted", value=**You have been given permissions to access NSFW content.**)
+        embed = discord.Embed(title="NSFW | Access Granted", color=discord.Color.red())
+        embed.add_field(name="You have been given permissions to access NSFW content", value=member.mention)
         embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
         await self.client.say(embed=embed)
         
         
-    @client.command(pass_context = True)
-    async def nudity(ctx, member : discord.Member):
+    @commands.command(pass_context = True)
+    async def nudity(self, ctx, member : discord.Member):
         """When you execute this command you would be given access to nsfw content."""
         role = discord.utils.get(member.server.roles, name='NSFW')
         await client.add_roles(member, role)
-        embed = discord.Embed(title="NSFW", color=discord.Color.red())
-        embed.add_field(name="Access Granted", value=**You have been given permissions to access NSFW content.**)
+        embed = discord.Embed(title="NSFW | Access Granted", color=discord.Color.red())
+        embed.add_field(name="You have been given permissions to access NSFW content", value=member.mention)
         embed.set_footer(text=self.client.user.name, icon_url=self.client.user.avatar_url)
         await self.client.say(embed=embed)
         
