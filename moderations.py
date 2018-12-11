@@ -178,6 +178,25 @@ class Moderations:
         await self.client.say('***Message sent!***')
         await self.client.delete_message(ctx.message)
 
+        
+    @commands.command(pass_context = True)
+    @commands.has_permissions(manage_messages=True)
+    async def clear(self, ctx, amount: int):
+        """Clear amount of messages you entered in the string"""
+        deleted = await ctx.channel.purge(limit=amount)
+        embed=discord.Embed(color=0xffffff)
+        embed.add_field(name="✅ Success", value=f"Cleared {amount} Messages!", inline=False)
+        await ctx.channel.send(embed=embed)
+        
+        
+    @commands.command(pass_context = True)
+    @commands.has_permissions(manage_messages=True)
+    async def purge(self, ctx, amount: int):
+        """Clear amount of messages you entered in the string"""
+        deleted = await ctx.channel.purge(limit=amount)
+        embed=discord.Embed(color=0xffffff)
+        embed.add_field(name="✅ Success", value=f"Cleared {amount} Messages!", inline=False)
+        await ctx.channel.send(embed=embed)
 
 
     @commands.command(pass_context=True)
