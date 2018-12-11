@@ -42,6 +42,25 @@ class TimeConverter(commands.Converter):
 class Moderations:
     def __init__(self, client):
         self.client = client
+        
+        
+
+    @commands.command(pass_context=True)
+    @commands.has_role('The Queen')
+    async def reactrole(self, ctx):
+        channel = client.get_channel('521937059212951552')
+        role = discord.utils.get(user.server.roles, name="Nsfw")
+        message = await self.client.send_message(channel, "React with the :thumbsup: to get access to nsfw content!")
+        reaction, reactor = await bot.wait_for_reaction(emoji="👍", message=message)
+        await self.client.add_roles(reactor, role)
+    
+    
+    @commands.command(pass_context=True)
+    @commands.has_role('The Queen')
+    async def nsfw(self, ctx):
+        await self.client.say(f'{member.name} has been permitted to access nsfw content!')
+        role = discord.utils.get(ctx.message.server.roles, name="Nsfw")
+        await self.client.add_roles(member, role)
 
 
     @commands.command(pass_context=True)
