@@ -50,7 +50,7 @@ class Moderations:
     async def reactrole(self, ctx):
         channel = client.get_channel('521937059212951552')
         role = discord.utils.get(user.server.roles, name="Nsfw")
-        message = await self.client.send_message(channel, "React with the :thumbsup: to get access to nsfw content!")
+        message = await self.client.send_message(channel, "React with the :thumbsup: to get access to NSFW content! <#521926119155302427>")
         reaction, reactor = await bot.wait_for_reaction(emoji="👍", message=message)
         await self.client.add_roles(reactor, role)
     
@@ -58,41 +58,11 @@ class Moderations:
     @commands.command(pass_context=True)
     @commands.has_role('The Queen')
     async def nsfw(self, ctx):
-        await self.client.say(f'{member.name} has been permitted to access nsfw content!')
         role = discord.utils.get(ctx.message.server.roles, name="Nsfw")
+        await self.client.say(f'{member.mention} has been permitted to access NSFW content! <#521926119155302427>')
         await self.client.add_roles(member, role)
 
 
-    @commands.command(pass_context=True)
-    @commands.has_role('Staff')
-    async def permit(self, ctx, user: discord.Member):
-        """Gives the user you provided in the string the permissions to add links / images or media. (STAFF ONLY)""" 
-        role = discord.utils.get(user.server.roles, name="Image Perms")
-        await self.client.delete_message(ctx.message)
-        await self.client.add_roles(user, role)
-        embed= discord.Embed(title="Permit.", description="***{} has been given permission to post images / links!*** ".format(user.mention), color=0xF35353)
-        await self.client.say(embed=embed)
-
-
-    @commands.command(pass_context=True)
-    @commands.has_role('Staff')
-    async def approve(self, ctx, user: discord.Member):
-        """Gives the user you provided in the string the permissions to add links / images or media. (STAFF ONLY)""" 
-        role = discord.utils.get(user.server.roles, name="Image Perms")
-        await self.client.delete_message(ctx.message)
-        await self.client.add_roles(user, role)
-        embed= discord.Embed(title="Permit.", description="***{} has been given permission to post images / links!*** ".format(user.mention), color=0xF35353)
-        await self.client.say(embed=embed)
-
-    @commands.command(pass_context=True)
-    @commands.has_role('Staff')
-    async def perm(self, ctx, user: discord.Member):
-        """Gives the user you provided in the string the permissions to add links / images or media. (STAFF ONLY)""" 
-        role = discord.utils.get(user.server.roles, name="Image Perms")
-        await self.client.delete_message(ctx.message)
-        await self.client.add_roles(user, role)
-        embed= discord.Embed(title="Permit.", description="***{} has been given permission to post images / links!*** ".format(user.mention), color=0xF35353)
-        await self.client.say(embed=embed)
         
         
     @commands.command(name="whois", pass_context=True)
