@@ -182,6 +182,7 @@ class Moderations:
         messages = []
         async for message in self.client.logs_from(channel, limit=int(amount) + 1):
             messages.append(message)
+            await self.client.delete_messages(messages)
             await self.client.say('Messages deleted! :thumbsup:')
             
             
@@ -193,11 +194,30 @@ class Moderations:
         messages = []
         async for message in self.client.logs_from(channel, limit=int(amount) + 1):
             messages.append(message)
+            await self.client.delete_messages(messages)
             await self.client.say('Messages deleted! :thumbsup:')
 
 
     @commands.command(pass_context=True)
     async def avatar(self, ctx, user: discord.Member):
+        """Gets the users avatar you provided in the string. (STAFF ONLY)"""
+        embed = discord.Embed(title="Here's {}s avatar :".format(user.name), color=0xF35353)
+        embed.set_image(url=user.avatar_url)
+        await self.client.delete_message(ctx.message)
+        await self.client.say(embed=embed)
+        
+        
+    @commands.command(pass_context=True)
+    async def av(self, ctx, user: discord.Member):
+        """Gets the users avatar you provided in the string. (STAFF ONLY)"""
+        embed = discord.Embed(title="Here's {}s avatar :".format(user.name), color=0xF35353)
+        embed.set_image(url=user.avatar_url)
+        await self.client.delete_message(ctx.message)
+        await self.client.say(embed=embed)
+        
+        
+    @commands.command(pass_context=True)
+    async def pfp(self, ctx, user: discord.Member):
         """Gets the users avatar you provided in the string. (STAFF ONLY)"""
         embed = discord.Embed(title="Here's {}s avatar :".format(user.name), color=0xF35353)
         embed.set_image(url=user.avatar_url)
