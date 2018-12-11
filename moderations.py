@@ -362,15 +362,14 @@ class Moderations:
             await self.client.send_message(channel, embed=embed)
 
     @commands.command(pass_context=True)
-    @commands.has_role('Staff')
     async def say(self, ctx, *, message):
         """Makes the bot say something magical (STAFF ONLY)"""
         if '@everyone' in message: # Checking to make sure the user isn't trying to ping everyone or here
-            await self.client.say('Nice try.')
+            await self.client.say('Nice try but you\'re gay.')
             await self.client.delete_message(ctx.message)
             return
         elif '@here' in message:
-            await self.client.say('Nice try.')
+            await self.client.say('Nice try but you\'re gay.')
             await self.client.delete_message(ctx.message)
             return
         else:
@@ -381,7 +380,6 @@ class Moderations:
             
             
     @commands.command(pass_context=True)
-    @commands.has_role('Staff')
     async def echo(self, ctx, *, message):
         """Makes the bot say something magical (STAFF ONLY)"""
         if '@everyone' in message: # Checking to make sure the user isn't trying to ping everyone or here
