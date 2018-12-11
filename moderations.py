@@ -173,29 +173,15 @@ class Moderations:
         await self.client.say('***Message sent!***')
         await self.client.delete_message(ctx.message)
 
-        
     @commands.command(pass_context = True)
-    @commands.has_permissions(manage_messages=True)
-    async def clear(self, ctx, amount=10):
-        """Clear amount of messages you entered in the string"""
-        channel = ctx.message.channel
-        messages = []
-        async for message in self.client.logs_from(channel, limit=int(amount) + 1):
-            messages.append(message)
-            await self.client.delete_messages(messages)
-            await self.client.say('Messages deleted! :thumbsup:')
-            
-            
-    @commands.command(pass_context = True)
-    @commands.has_permissions(manage_messages=True)
-    async def purge(self, ctx, amount=10):
-        """Clear amount of messages you entered in the string"""
-        channel = ctx.message.channel
-        messages = []
-        async for message in self.client.logs_from(channel, limit=int(amount) + 1):
-            messages.append(message)
-            await self.client.delete_messages(messages)
-            await self.client.say('Messages deleted! :thumbsup:')
+    async def purge(self, ctx, number):
+        mgs = [] 
+        number = int(number) 
+        async for x in self.client.purge_from (ctx.message.channel, limit = number):
+            mgs.append(x)
+        await self.client.delete_messages(mgs)
+        await self.client.say(f"{number}msgs has been deleted! :thumbsup:")
+    
 
 
     @commands.command(pass_context=True)
