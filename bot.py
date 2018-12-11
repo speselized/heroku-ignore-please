@@ -18,7 +18,6 @@ from discord.ext import commands
 from discord.utils import get
 
 
-TOKEN = 'NDkwNDQ3NTUzMjIyMTQ4MDk3.Dn6o0g.I87hdy0DJps4vOcFuo34GmFNTt0'
 client = commands.Bot(command_prefix = '?')
 
 extensions = ['fun', 'moderations', 'music']
@@ -26,22 +25,12 @@ extensions = ['fun', 'moderations', 'music']
 @client.event
 async def on_ready():
     await client.change_presence(game=discord.Game(name='Made by Rain#0007'))
-    print('--------------------------------------------------------------------------------------------------------------')
-    print('Logged in as '+client.user.name+' (ID:'+client.user.id+') | Connected to '+str(len(client.servers))+' servers | Connected to '+str(len(set(client.get_all_members())))+' users')
-    print('')
-    print('685 Lines of code has been loaded to your awesome bot!')
-    print('')
-    servers = list(client.servers)
-    print("Connected on " +str(len(client.servers))+' servers')
-    for x in range(len(servers)):
-        print(' '+servers[x-1].name)
-    print('--------------------------------------------------------------------------------------------------------------')
     
     
     
 @client.event
 async def on_member_join(member):
-    role = discord.utils.get(member.server.roles, name = 'Members')
+    role = discord.utils.get(member.server.roles, name = 'Low Life')
     channel = discord.utils.get(member.server.channels, name='welcome')
     await client.add_roles(member, role)
     await client.send_message(channel, f"Hi {member.mention}. Please read the rules if you haven't.")
