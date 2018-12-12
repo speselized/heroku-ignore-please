@@ -29,33 +29,6 @@ async def on_ready():
     
 
             
-
-        
-        
-        
-        
-        
-@client.event
-async def on_socket_raw_receive(ctx, raw_msg):
-    role = discord.utils.get(ctx.message.server.roles, name="NSFW")
-    if not isinstance(raw_msg, str):
-      return
-    msg = json.loads(raw_msg)
-    type = msg.get("t")
-    data = msg.get("d")
-    if not data:
-      return
-    emoji = data.get("emoji")
-    user_id = data.get("user_id")
-    message_id = data.get("message_id")
-    if type == "MESSAGE_REACTION_ADD":
-        if message_id == "522219835170750465":
-            if emoji == "👍":
-               await client.add_roles(user, role)
-    if type == "MESSAGE_REACTION_REMOVE":
-        if message_id == "522219835170750465":
-            if emoji == "👍":
-               await client.remove_roles(user, role)
             
 
     
