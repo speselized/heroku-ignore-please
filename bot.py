@@ -43,14 +43,42 @@ async def on_socket_raw_receive(raw_msg):
     emoji = data.get("👍")
     user_id = data.get("user_id")
     message_id = data.get("522219835170750465")
-    member = Server.get_member(user_id)
+    member = server.get_member(user_id)
     if type == "MESSAGE_REACTION_ADD":
         if emoji == '👍':
-            role = discord.utils.get(Server.roles, id='521922820666556443')
+            role = discord.utils.get(server.roles, id='521922820666556443')
             await client.remove_roles(member, role)
     elif type == "MESSAGE_REACTION_REMOVE":
-        role = discord.utils.get(Server.roles, id='521922820666556443')
+        role = discord.utils.get(server.roles, id='521922820666556443')
         await client.add_roles(member, role)
+        
+        
+        
+        
+        
+        
+@client.event
+async def on_socket_raw_receive(raw_msg):
+    rolename = "NSFW"
+    role = discord.utils.get(user.server.roles, name=rolename)
+    if not isinstance(raw_msg, str):
+      return
+    msg = json.loads(raw_msg)
+    type = msg.get("t")
+    data = msg.get("d")
+    if not data:
+      return
+    emoji = data.get("emoji")
+    user_id = data.get("user_id")
+    message_id = data.get("message_id")
+    if type == "MESSAGE_REACTION_ADD":
+        if message_id == "522219835170750465":
+            if emoji == "👍":
+               await client.add_roles(user, role)
+    if type == "MESSAGE_REACTION_REMOVE":
+        if message_id == "522219835170750465":
+            if emoji == "👍":
+               await client.remove_roles(user, role)
             
 
     
