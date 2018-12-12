@@ -27,23 +27,7 @@ async def on_ready():
     await client.change_presence(game=discord.Game(name='Made by Rain#0007'))
     
     
-    
-    
- async def on_socket_raw_receive(raw_msg):
-        if not isinstance(raw_msg, str):
-            return
-        msg = json.loads(raw_msg)
-        type = msg.get("t")
-        data = msg.get("d")
-        if not data:
-            return
-        emoji = data.get("emoji")
-        user_id = data.get("user_id")
-        message_id = data.get("message_id")
-        if type == "MESSAGE_REACTION_ADD":
-            user = discord.utils.get(client.get_all_members(), id = user_id)
-            role = discord.utils.get(user.server.roles, name='NSFW')
-            await client.add_roles(user, role)
+
             
             
             
@@ -56,12 +40,12 @@ async def on_socket_raw_receive(raw_msg):
     data = msg.get("d")
     if not data:
         return
-    emoji = data.get("emoji")
+    emoji = data.get("👍")
     user_id = data.get("user_id")
-    message_id = data.get("message_id")
+    message_id = data.get("522219835170750465")
     member = Server.get_member(user_id)
     if type == "MESSAGE_REACTION_ADD":
-        if emoji == '☑':
+        if emoji == '👍':
             role = discord.utils.get(Server.roles, id='521922820666556443')
             await client.remove_roles(member, role)
     elif type == "MESSAGE_REACTION_REMOVE":
