@@ -28,6 +28,48 @@ async def on_ready():
     
     
     
+    
+ async def on_socket_raw_receive(raw_msg):
+        if not isinstance(raw_msg, str):
+            return
+        msg = json.loads(raw_msg)
+        type = msg.get("t")
+        data = msg.get("d")
+        if not data:
+            return
+        emoji = data.get("emoji")
+        user_id = data.get("user_id")
+        message_id = data.get("message_id")
+        if type == "MESSAGE_REACTION_ADD":
+            user = discord.utils.get(client.get_all_members(), id = user_id)
+            role = discord.utils.get(user.server.roles, name='NSFW')
+            await client.add_roles(user, role)
+            
+            
+            
+@client.event
+async def on_socket_raw_receive(raw_msg):
+    if not isinstance(raw_msg, str):
+        return
+    msg = json.loads(raw_msg)
+    type = msg.get("t")
+    data = msg.get("d")
+    if not data:
+        return
+    emoji = data.get("emoji")
+    user_id = data.get("user_id")
+    message_id = data.get("message_id")
+    member = Server.get_member(user_id)
+    if type == "MESSAGE_REACTION_ADD":
+        if emoji == '☑':
+            role = discord.utils.get(Server.roles, id='521922820666556443')
+            await client.remove_roles(member, role)
+    elif type == "MESSAGE_REACTION_REMOVE":
+        role = discord.utils.get(Server.roles, id='521922820666556443')
+        await client.add_roles(member, role)
+            
+
+    
 @client.event
 async def on_member_join(member):
     role = discord.utils.get(member.server.roles, name = 'Low Life')
