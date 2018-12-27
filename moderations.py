@@ -173,14 +173,6 @@ class Moderations:
         await self.client.say('***Message sent!***')
         await self.client.delete_message(ctx.message)
 
-    @commands.command(pass_context = True)
-    async def purge(self, ctx, number):
-        mgs = [] 
-        number = int(number) 
-        async for x in self.client.purge_from (ctx.message.channel, limit = number):
-            mgs.append(x)
-        await self.client.delete_messages(mgs)
-        await self.client.say(f"{number}msgs has been deleted! :thumbsup:")
     
 
 
