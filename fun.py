@@ -168,6 +168,19 @@ class Fun:
         resp = await self.client.say('Pong! Loading...')
         diff = resp.timestamp - ctx.message.timestamp
         await self.client.edit_message(resp, f'Pong! That took {1000*diff.total_seconds():.1f}ms.')
+        
+        
+        
+        
+    @commands.command(pass_context=True)
+    async def fortnite(self, ctx):
+        """fortnite"""
+        resp = await self.client.say('Fortnite details! Loading...')
+        await self.client.edit_message(resp, '``*...*``')
+        await self.client.edit_message(resp, '``*......*``')
+        await self.client.edit_message(resp, '``*.........*``')
+        await self.client.edit_message(resp, '``*Loaded | ............*``')
+        await self.client.edit_message(resp, 'You\'re a faggot since you used this command because this tells me that you like fortnite.')
 
 
 
